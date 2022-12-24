@@ -10,23 +10,12 @@
     /*grid-gap: 10px;*/
 }
 
-.header {
-    grid-area: h;
-    background-color: cornflowerblue;
-}
-
-.header img{
-    width: 30px;
-}
-
-.navigation {
-    grid-area: n;
-    background-color: blueviolet;
-
-}
-
-.content {
+.app-wrapper-content{
     grid-area: c;
     background-color: aqua;
-
 }
+
+
+
+
+
