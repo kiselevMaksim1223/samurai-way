@@ -1,21 +1,15 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
+import {postDataType} from "../../../index";
 
-type postDataType = {
-    id:number
-    postContent:string
-}
+type postDataPropsType = {
+    postData:postDataType[] }
 
-const MyPosts = () => {
 
-    const postData:postDataType[] = [
-        {id:1, postContent:"My first post"},
-        {id:2, postContent:"HelloFW"},
-        {id:3, postContent:"Do you know Lil Peep?"},
-        {id:4, postContent:"Anna"},
-        {id:5, postContent:"Igor"},
-    ]
+const MyPosts = (props:postDataPropsType) => {
+
+
 
     return (
         <div className={s.posts_title}>
@@ -29,7 +23,7 @@ const MyPosts = () => {
                 </div>
             </div>
             <div className={s.posts}>
-                {postData.map(p => {
+                {props.postData.map(p => {
                     return(
                         <Post key={p.id} postContent={p.postContent}/>
                     )
