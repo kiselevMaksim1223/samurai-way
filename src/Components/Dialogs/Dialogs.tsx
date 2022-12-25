@@ -2,12 +2,13 @@ import React from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
-import {dialogItemType, messageItemType} from "../../index";
+import {dialogItemDataType, messageItemDataType} from "../../redux/state";
+// import {dialogItemType, messageItemType} from "../../index";
 
 
 type DialogsDataPropsType = {
-    dialogItemData:dialogItemType[]
-    messageItemData:messageItemType[]
+    dialogItemData:dialogItemDataType[]
+    messageItemData:messageItemDataType[]
 }
 
 

@@ -2,52 +2,54 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {state} from "./redux/state";
 
 
-export type dialogItemType = {
-    id:number
-    name:string
-}
+// export type dialogItemType = {
+//     id:number
+//     name:string
+// }
+//
+// export type messageItemType = {
+//     id:number
+//     message:string
+// }
+//
+// export type postDataType = {
+//     id:number
+//     postContent:string
+// }
 
-export type messageItemType = {
-    id:number
-    message:string
-}
-
-export type postDataType = {
-    id:number
-    postContent:string
-}
-
-const dialogItemData:dialogItemType[] = [
-    {id:1, name:"Vasa"},
-    {id:2, name:"Dima"},
-    {id:3, name:"Sasha"},
-    {id:4, name:"Anna"},
-    {id:5, name:"Igor"},
-]
-
-const messageItemData:messageItemType[] = [
-    {id:1, message:"Hi"},
-    {id:2, message:"Good"},
-    {id:3, message:"Nonononnono"},
-    {id:4, message:"FUCK me"},
-]
-
-const postData:postDataType[] = [
-    {id:1, postContent:"My first post"},
-    {id:2, postContent:"HelloFW"},
-    {id:3, postContent:"Do you know Lil Peep?"},
-    {id:4, postContent:"Anna"},
-    {id:5, postContent:"Igor"},
-]
+// const dialogItemData:dialogItemType[] = [
+//     {id:1, name:"Vasa"},
+//     {id:2, name:"Dima"},
+//     {id:3, name:"Sasha"},
+//     {id:4, name:"Anna"},
+//     {id:5, name:"Igor"},
+// ]
+//
+// const messageItemData:messageItemType[] = [
+//     {id:1, message:"Hi"},
+//     {id:2, message:"Good"},
+//     {id:3, message:"Nonononnono"},
+//     {id:4, message:"FUCK me"},
+// ]
+//
+// const postData:postDataType[] = [
+//     {id:1, postContent:"My first post"},
+//     {id:2, postContent:"HelloFW"},
+//     {id:3, postContent:"Do you know Lil Peep?"},
+//     {id:4, postContent:"Anna"},
+//     {id:5, postContent:"Igor"},
+// ]
 
 
 ReactDOM.render(
     <App
-        dialogItemData={dialogItemData}
-        messageItemData={messageItemData}
-        postData ={postData}
+        // dialogItemData={dialogItemData}
+        // messageItemData={messageItemData}
+        // postData ={postData}
+        state = {state}
     />,
   document.getElementById('root')
 );

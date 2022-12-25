@@ -8,29 +8,39 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {dialogItemType, messageItemType, postDataType} from "./index";
+import {stateType} from "./redux/state";
+// import {dialogItemType, messageItemType, postDataType} from "./index";
 
-type AppDataPropsType = {
-    dialogItemData: dialogItemType[]
-    messageItemData: messageItemType[]
-    postData: postDataType[]
+// type AppDataPropsType = {
+//     dialogItemData: dialogItemType[]
+//     messageItemData: messageItemType[]
+//     postData: postDataType[]
+// }
+
+type AppStateType = {
+    state:stateType
 }
 
 
-const App = (props: AppDataPropsType) => {
+
+
+const App = (props: AppStateType) => {
 
     const DialogComponent = () => {
         return (
             <Dialogs
-                dialogItemData={props.dialogItemData}
-                messageItemData={props.messageItemData}
+                // dialogItemData={props.dialogItemData}
+                dialogItemData={props.state.dialogsPage.dialogItemData}
+                messageItemData={props.state.dialogsPage.messageItemData}
             />
         )
     }
 
     const ProfileComponent = () => {
         return (
-            <Profile postData={props.postData}/>
+            <Profile
+                postData={props.state.profilePage.postData}
+            />
         )
     }
 
