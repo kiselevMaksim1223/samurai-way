@@ -8,6 +8,7 @@ import {postDataType} from "../../redux/state";
 
 type profileDataType = {
     postData:postDataType[]
+    addPost:(postContent:string) => void
 }
 
 const Profile = (props:profileDataType) => {
@@ -22,7 +23,10 @@ const Profile = (props:profileDataType) => {
 
     return <div className={s.content}>
         <ProfileInfo />
-        <MyPosts postData={props.postData}/>
+        <MyPosts
+            postData={props.postData}
+            addPost = {props.addPost}
+        />
     </div>
 
 

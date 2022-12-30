@@ -1,34 +1,44 @@
-
-
+import {renderEntireTree} from "../render";
 
 export type stateType = {
-    profilePage:profilePageType
-    dialogsPage:dialogsPage
+    profilePage: profilePageType
+    dialogsPage: dialogsPage
+    sideBar: sideBarPage
 }
 
 export type profilePageType = {
-    postData:postDataType[]
+    postData: postDataType[]
 }
 
 export type dialogsPage = {
-    dialogItemData:dialogItemDataType[]
-    messageItemData:messageItemDataType[]
+    dialogItemData: dialogItemDataType[]
+    messageItemData: messageItemDataType[]
+}
+
+export type sideBarPage = {
+    friendsList: friendListItemType[]
 }
 
 export type dialogItemDataType = {
-    id:number
-    name:string
+    id: number
+    name: string
 }
 
 export type messageItemDataType = {
-    id:number
-    message:string
+    id: number
+    message: string
 }
 
 export type postDataType = {
-    id:number
-    postContent:string
+    id: number
+    postContent: string
 }
+
+export type friendListItemType = {
+    id: number
+    friend: string
+}
+
 
 // const dialogItemData:dialogItemType[] = [
 //     {id:1, name:"Vasa"},
@@ -53,29 +63,47 @@ export type postDataType = {
 //     {id:5, postContent:"Igor"},
 // ]
 
-export const state:stateType = {
+export const state: stateType = {
     profilePage: {
-        postData:[
-            {id:1, postContent:"My first post"},
-            {id:2, postContent:"HelloFW"},
-            {id:3, postContent:"Do you know Lil Peep?"},
-            {id:4, postContent:"Anna"},
-            {id:5, postContent:"Igor"},
+        postData: [
+            {id: 1, postContent: "My first post"},
+            {id: 2, postContent: "HelloFW"},
+            {id: 3, postContent: "Do you know Lil Peep?"},
+            {id: 4, postContent: "Anna"},
+            {id: 5, postContent: "Igor"},
         ]
     },
-    dialogsPage:{
-        dialogItemData:[
-            {id:1, name:"Vasa"},
-            {id:2, name:"Dima"},
-            {id:3, name:"Sasha"},
-            {id:4, name:"Anna"},
-            {id:5, name:"Igor"},
+    dialogsPage: {
+        dialogItemData: [
+            {id: 1, name: "Vasa"},
+            {id: 2, name: "Dima"},
+            {id: 3, name: "Sasha"},
+            {id: 4, name: "Anna"},
+            {id: 5, name: "Igor"},
         ],
-        messageItemData:[
-            {id:1, message:"Hi"},
-            {id:2, message:"Good"},
-            {id:3, message:"Nonononnono"},
-            {id:4, message:"FUCK me"},
+        messageItemData: [
+            {id: 1, message: "Hi"},
+            {id: 2, message: "Good"},
+            {id: 3, message: "Nonononnono"},
+            {id: 4, message: "FUCK me"},
+        ]
+    },
+    sideBar: {
+        friendsList: [
+            {id: 1, friend: "Vasa"},
+            {id: 2, friend: "Asa"},
+            {id: 3, friend: "Denny"},
+            {id: 4, friend: "Ron"},
         ]
     }
+}
+
+export const addNewPost = (postContent: string) => {
+
+    const newPost = {
+        id: 5,
+        postContent: postContent
+    }
+    state.profilePage.postData.push(newPost)
+    renderEntireTree(state)
 }

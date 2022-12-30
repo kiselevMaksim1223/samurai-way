@@ -1,8 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import {renderEntireTree} from "./render";
 import {state} from "./redux/state";
+
+
+
 
 
 // export type dialogItemType = {
@@ -43,13 +45,16 @@ import {state} from "./redux/state";
 //     {id:5, postContent:"Igor"},
 // ]
 
+// const renderEntireTree = () => {
+//     ReactDOM.render(
+//         <App
+//             // dialogItemData={dialogItemData}
+//             // messageItemData={messageItemData}
+//             // postData ={postData}
+//             state = {state}
+//         />,
+//         document.getElementById('root')
+//     );
+// }
 
-ReactDOM.render(
-    <App
-        // dialogItemData={dialogItemData}
-        // messageItemData={messageItemData}
-        // postData ={postData}
-        state = {state}
-    />,
-  document.getElementById('root')
-);
+renderEntireTree(state)

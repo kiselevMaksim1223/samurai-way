@@ -19,6 +19,7 @@ import {stateType} from "./redux/state";
 
 type AppStateType = {
     state:stateType
+    addPost:(postContent:string) => void
 }
 
 
@@ -40,6 +41,7 @@ const App = (props: AppStateType) => {
         return (
             <Profile
                 postData={props.state.profilePage.postData}
+                addPost = {props.addPost}
             />
         )
     }
