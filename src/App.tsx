@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {stateType} from "./redux/state";
+import {changeNewPostText, stateType} from "./redux/state";
 // import {dialogItemType, messageItemType, postDataType} from "./index";
 
 // type AppDataPropsType = {
@@ -19,7 +19,9 @@ import {stateType} from "./redux/state";
 
 type AppStateType = {
     state:stateType
-    addPost:(postContent:string) => void
+    // addPost:(postContent:string) => void
+    addPost:() => void
+    changeNewPostText: (newPostText: string) => void
 }
 
 
@@ -41,7 +43,9 @@ const App = (props: AppStateType) => {
         return (
             <Profile
                 postData={props.state.profilePage.postData}
+                newTextPost = {props.state.profilePage.newPostText}
                 addPost = {props.addPost}
+                changeNewPostText = {props.changeNewPostText}
             />
         )
     }

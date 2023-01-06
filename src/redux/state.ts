@@ -8,6 +8,7 @@ export type stateType = {
 
 export type profilePageType = {
     postData: postDataType[]
+    newPostText:string
 }
 
 export type dialogsPage = {
@@ -71,7 +72,8 @@ export const state: stateType = {
             {id: 3, postContent: "Do you know Lil Peep?"},
             {id: 4, postContent: "Anna"},
             {id: 5, postContent: "Igor"},
-        ]
+        ],
+        newPostText: "SAMURAIS"
     },
     dialogsPage: {
         dialogItemData: [
@@ -98,12 +100,22 @@ export const state: stateType = {
     }
 }
 
-export const addNewPost = (postContent: string) => {
+export const addNewPost = () => {
 
     const newPost = {
         id: 5,
-        postContent: postContent
+        //сообщение берем из стейта, так как оно после ввода в ->//
+        // -> текс эреа попадает в стейт//
+        postContent: state.profilePage.newPostText
     }
     state.profilePage.postData.push(newPost)
+    state.profilePage.newPostText = ""
+    renderEntireTree(state)
+}
+
+export const changeNewPostText = (newPostText: string) => {
+
+
+    state.profilePage.newPostText = newPostText
     renderEntireTree(state)
 }

@@ -6,7 +6,10 @@ import {postDataType} from "../../../redux/state";
 
 type postDataPropsType = {
     postData: postDataType[]
-    addPost:(postContent:string) => void
+    newPostText: string
+    // addPost: (postContent: string) => void
+    addPost: () => void
+    changeNewPostText: (newPostText: string) => void
 }
 
 
@@ -16,16 +19,27 @@ const MyPosts = (props: postDataPropsType) => {
     let textAreaPostRef = useRef<HTMLTextAreaElement>(null)
 
     const addPostOnClickHandler = () => {
+        // if (textAreaPostRef.current) {
+        //     props.addPost(textAreaPostRef.current.value)
+        // }
+        props.addPost()
+    }
+
+    const onChangePostChangeHandler = () => {
         if (textAreaPostRef.current) {
-            props.addPost(textAreaPostRef.current.value)
-            textAreaPostRef.current.value = ""
+            props.changeNewPostText(textAreaPostRef.current.value)
         }
     }
+
 
     const addPostsBlock =
         <div className={s.newPost_block}>
             <div>
-                <textarea ref={textAreaPostRef}></textarea>
+                <textarea
+                    onChange={onChangePostChangeHandler}
+                    ref={textAreaPostRef}
+                    value={props.newPostText}
+                />
             </div>
             <div>
                 <button onClick={addPostOnClickHandler}>Add new post</button>
@@ -40,8 +54,6 @@ const MyPosts = (props: postDataPropsType) => {
                 )
             })}
         </div>
-
-
 
 
     return (
