@@ -12,6 +12,7 @@ export type profilePageType = {
 export type dialogsPage = {
     dialogItemData: dialogItemDataType[]
     messageItemData: messageItemDataType[]
+    newMessageBody:string
 }
 
 export type sideBarPage = {
@@ -41,8 +42,9 @@ export type friendListItemType = {
 // export type callBack = ((state:stateType) => void)
 
 export type actionType = {
-    type: "ADD-NEW-POST" | "CHANGE-NEW-POST-TEXT"
+    type: "ADD-NEW-POST" | "CHANGE-NEW-POST-TEXT" | "ADD-NEW-MESSAGE" | "CHANGE-NEW-MESSAGE-TEXT"
     newPostText?:string
+    newMessageBody?:string
 }
 
 export type storeType = {
@@ -51,6 +53,8 @@ export type storeType = {
     getState: () => stateType
     subscribe:(observer:(state:stateType) => void) => void
     dispatch: (action:actionType) => void
+
+
     // addNewPost:() => void
     // changeNewPostText:(newPostText: string) => void
 }
@@ -108,7 +112,8 @@ export let store:storeType = {
                 {id: 2, message: "Good"},
                 {id: 3, message: "Nonononnono"},
                 {id: 4, message: "FUCK me"},
-            ]
+            ],
+            newMessageBody: "fsfd"
         },
         sideBar: {
             friendsList: [
@@ -156,18 +161,47 @@ export let store:storeType = {
             this._state.profilePage.postData.push(newPost)
             this._state.profilePage.newPostText = ""
             this._renderEntireTree(this._state)
-        } else if (action.type === "CHANGE-NEW-POST-TEXT"){
+        }
+        else if (action.type === "CHANGE-NEW-POST-TEXT"){
             if (action.newPostText != null) {
                 this._state.profilePage.newPostText = action.newPostText
+            }
+            this._renderEntireTree(this._state)
+        }
+        else if (action.type === "ADD-NEW-MESSAGE") {
+            const newMessageBody =  {id: 5, message: this._state.dialogsPage.newMessageBody}
+            this._state.dialogsPage.messageItemData.push(newMessageBody)
+            this._state.dialogsPage.newMessageBody =""
+            this._renderEntireTree(this._state)
+        }
+        else  if (action.type === "CHANGE-NEW-MESSAGE-TEXT") {
+            if (action.newMessageBody != null) {
+                this._state.dialogsPage.newMessageBody = action.newMessageBody
             }
             this._renderEntireTree(this._state)
         }
     }
 }
 
-export const addNewPostCreateAction:(() => actionType) = () => ({type:"ADD-NEW-POST"})
+export const addNewPostCreateAction
+    :(() => actionType) //create Action type
+    = () => ({type:"ADD-NEW-POST"})
 
-export const changeNewPostTextCreateAction:((newPostText:string) => actionType) = (newPostText) =>  ({type:"CHANGE-NEW-POST-TEXT", newPostText:newPostText})
+export const changeNewPostTextCreateAction
+    :((newPostText:string) => actionType) //create Action type
+    = (newPostText) =>  ({type:"CHANGE-NEW-POST-TEXT", newPostText:newPostText})
+
+export const addNewMessageBodyCreateAction
+    :(() => actionType) //create Action type
+    = () => ({type:"ADD-NEW-MESSAGE"})
+
+export const changeNewMessageTextCreateAction
+    :((newMessageBody:string)=> actionType) //create Action type
+    = (newMessageBody) => ({type:"CHANGE-NEW-MESSAGE-TEXT", newMessageBody:newMessageBody})
+
+
+
+
 
 // export const state: stateType = {
 //     profilePage: {

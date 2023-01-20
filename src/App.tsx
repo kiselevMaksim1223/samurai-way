@@ -18,14 +18,12 @@ import {stateType, storeType} from "./redux/state";
 // }
 
 type AppStateType = {
-    state:stateType
-    store:storeType
+    state: stateType
+    store: storeType
     // addPost:(postContent:string) => void
     // addPost:() => void
     // changeNewPostText: (newPostText: string) => void
 }
-
-
 
 
 const App = (props: AppStateType) => {
@@ -34,9 +32,11 @@ const App = (props: AppStateType) => {
         return (
             <Dialogs
                 // dialogItemData={props.dialogItemData}
+
                 dialogItemData={props.state.dialogsPage.dialogItemData}
                 messageItemData={props.state.dialogsPage.messageItemData}
-            />
+                newMessageBody={props.state.dialogsPage.newMessageBody}
+                dispatch={props.store.dispatch.bind(props.store)}/>
         )
     }
 
@@ -44,8 +44,8 @@ const App = (props: AppStateType) => {
         return (
             <Profile
                 postData={props.state.profilePage.postData}
-                newTextPost = {props.state.profilePage.newPostText}
-                dispatch = {props.store.dispatch.bind(props.store)}
+                newTextPost={props.state.profilePage.newPostText}
+                dispatch={props.store.dispatch.bind(props.store)}
                 // changeNewPostText = {props.store.dispatch.bind(props.store)}
             />
         )

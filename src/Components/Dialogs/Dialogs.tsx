@@ -1,14 +1,23 @@
-import React, {useRef} from "react";
+import React from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
-import {dialogItemDataType, messageItemDataType} from "../../redux/state";
+import {
+    actionType,
+    addNewMessageBodyCreateAction,
+    changeNewMessageTextCreateAction,
+    dialogItemDataType,
+    messageItemDataType
+} from "../../redux/state";
+import {AddTextItem} from "./MessageItem/AddMessage/AddTextItem";
 // import {dialogItemType, messageItemType} from "../../index";
 
 
 type DialogsDataPropsType = {
     dialogItemData: dialogItemDataType[]
     messageItemData: messageItemDataType[]
+    newMessageBody: string
+    dispatch:(action:actionType) => void
 }
 
 
@@ -48,32 +57,43 @@ export const Dialogs = (props: DialogsDataPropsType) => {
         </div>
 
 
-   let  textAreaMessageRef = useRef<HTMLTextAreaElement>(null)
+    // const addMessageOnClickHandler = () => {
+    //     props.dispatch(addNewMessageBodyCreateAction())
+    //     // props.dispatch({type:"ADD-NEW-MESSAGE"})
+    // }
+    //
+    // const onChangeTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    //     let newText = e.currentTarget.value
+    //     props.dispatch(changeNewMessageTextCreateAction(newText))
+    //     // props.dispatch({type:"CHANGE-NEW-MESSAGE-TEXT", newMessageBody:newText})
+    // }
 
-    const addMessageOnClickHandler = () => {
-        if (textAreaMessageRef.current) {
-            console.log(textAreaMessageRef.current.value)
-            textAreaMessageRef.current.value = ""
-        }
-    }
+    // const dialogsAddMessageBlock =
+    //     <div className={s.createMessageWrapper}>
+    //         <div className={s.newPost_block}>
+    //             <div>
+    //                 <textarea value={props.newMessageBody} onChange={onChangeTextHandler}></textarea>
+    //             </div>
+    //             <div>
+    //                 <button onClick={addMessageOnClickHandler}>Add new message</button>
+    //             </div>
+    //         </div>
+    //     </div>
 
-    const dialogsAddMessageBlock =
-        <div className={s.createMessageWrapper}>
-            <div className={s.newPost_block}>
-                <div>
-                    <textarea ref={textAreaMessageRef}></textarea>
-                </div>
-                <div>
-                    <button onClick={addMessageOnClickHandler}>Add new message</button>
-                </div>
-            </div>
-        </div>
+    const onChangeMessageBody = (text:string) => {props.dispatch(changeNewMessageTextCreateAction(text))}
+    const onClickAddMessageBody = () => props.dispatch(addNewMessageBodyCreateAction())
 
     return (
         <div className={s.dialogs}>
             {mappedDialog}
             {mappedMessage}
-            {dialogsAddMessageBlock}
+            {/*{dialogsAddMessageBlock}*/}
+            <AddTextItem
+                value={props.newMessageBody}
+                buttonName={"Add new message"}
+                onChangeCallback={onChangeMessageBody}
+                onClickCallback={onClickAddMessageBody}
+            />
         </div>
     )
 }
