@@ -1,5 +1,3 @@
-import {renderEntireTree} from "../render";
-
 export type stateType = {
     profilePage: profilePageType
     dialogsPage: dialogsPage
@@ -40,6 +38,8 @@ export type friendListItemType = {
     friend: string
 }
 
+export type callBack = (() => void)
+
 
 // const dialogItemData:dialogItemType[] = [
 //     {id:1, name:"Vasa"},
@@ -63,6 +63,12 @@ export type friendListItemType = {
 //     {id:4, postContent:"Anna"},
 //     {id:5, postContent:"Igor"},
 // ]
+
+let renderEntireTree = () => {
+    console.log("state rendered")
+
+}
+
 
 export const state: stateType = {
     profilePage: {
@@ -110,12 +116,14 @@ export const addNewPost = () => {
     }
     state.profilePage.postData.push(newPost)
     state.profilePage.newPostText = ""
-    renderEntireTree(state)
+    renderEntireTree()
 }
 
 export const changeNewPostText = (newPostText: string) => {
-
-
     state.profilePage.newPostText = newPostText
-    renderEntireTree(state)
+    renderEntireTree()
+}
+
+export const subscribe = (observer:callBack) => {
+    renderEntireTree = observer
 }

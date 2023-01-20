@@ -1,7 +1,8 @@
 import React from 'react';
 import './index.css';
-import {renderEntireTree} from "./render";
-import {state} from "./redux/state";
+import {addNewPost, changeNewPostText, state, stateType, subscribe} from "./redux/state";
+import ReactDOM from "react-dom";
+import App from "./App";
 
 
 
@@ -57,4 +58,20 @@ import {state} from "./redux/state";
 //     );
 // }
 
+let renderEntireTree = (state:stateType) => {
+    ReactDOM.render(
+        <App
+            // dialogItemData={dialogItemData}
+            // messageItemData={messageItemData}
+            // postData ={postData}
+            state = {state}
+            addPost = {addNewPost}
+            changeNewPostText = {changeNewPostText}
+        />,
+        document.getElementById('root')
+    );
+}
+
 renderEntireTree(state)
+
+subscribe(renderEntireTree)
