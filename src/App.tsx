@@ -8,7 +8,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {changeNewPostText, stateType} from "./redux/state";
+import {stateType, storeType} from "./redux/state";
 // import {dialogItemType, messageItemType, postDataType} from "./index";
 
 // type AppDataPropsType = {
@@ -19,9 +19,10 @@ import {changeNewPostText, stateType} from "./redux/state";
 
 type AppStateType = {
     state:stateType
+    store:storeType
     // addPost:(postContent:string) => void
-    addPost:() => void
-    changeNewPostText: (newPostText: string) => void
+    // addPost:() => void
+    // changeNewPostText: (newPostText: string) => void
 }
 
 
@@ -44,8 +45,8 @@ const App = (props: AppStateType) => {
             <Profile
                 postData={props.state.profilePage.postData}
                 newTextPost = {props.state.profilePage.newPostText}
-                addPost = {props.addPost}
-                changeNewPostText = {props.changeNewPostText}
+                dispatch = {props.store.dispatch.bind(props.store)}
+                // changeNewPostText = {props.store.dispatch.bind(props.store)}
             />
         )
     }

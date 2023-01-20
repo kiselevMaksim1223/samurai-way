@@ -1,15 +1,16 @@
 import React, {useRef} from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {postDataType} from "../../../redux/state";
+import {actionType, postDataType} from "../../../redux/state";
 // import {postDataType} from "../../../index";
 
 type postDataPropsType = {
     postData: postDataType[]
     newPostText: string
+    dispatch:(action:actionType) => void
     // addPost: (postContent: string) => void
-    addPost: () => void
-    changeNewPostText: (newPostText: string) => void
+    // addPost: () => void
+    // changeNewPostText: (newPostText: string) => void
 }
 
 
@@ -22,12 +23,14 @@ const MyPosts = (props: postDataPropsType) => {
         // if (textAreaPostRef.current) {
         //     props.addPost(textAreaPostRef.current.value)
         // }
-        props.addPost()
+        // props.addPost()
+        props.dispatch({type:"ADD-NEW-POST"})
     }
 
     const onChangePostChangeHandler = () => {
         if (textAreaPostRef.current) {
-            props.changeNewPostText(textAreaPostRef.current.value)
+            // props.changeNewPostText(textAreaPostRef.current.value)
+            props.dispatch({type:"CHANGE-NEW-POST-TEXT", newPostText:textAreaPostRef.current.value})
         }
     }
 

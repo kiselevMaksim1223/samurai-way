@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.css';
-import {addNewPost, changeNewPostText, state, stateType, subscribe} from "./redux/state";
+// import {addNewPost, changeNewPostText, state, stateType, subscribe, store} from "./redux/state";
+import {stateType, store} from "./redux/state";
 import ReactDOM from "react-dom";
 import App from "./App";
 
@@ -65,13 +66,12 @@ let renderEntireTree = (state:stateType) => {
             // messageItemData={messageItemData}
             // postData ={postData}
             state = {state}
-            addPost = {addNewPost}
-            changeNewPostText = {changeNewPostText}
+            store = {store}
         />,
         document.getElementById('root')
     );
 }
 
-renderEntireTree(state)
+renderEntireTree(store.getState())
 
-subscribe(renderEntireTree)
+store.subscribe(renderEntireTree)
