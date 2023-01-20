@@ -165,6 +165,10 @@ export let store:storeType = {
     }
 }
 
+export const addNewPostCreateAction:(() => actionType) = () => ({type:"ADD-NEW-POST"})
+
+export const changeNewPostTextCreateAction:((newPostText:string) => actionType) = (newPostText) =>  ({type:"CHANGE-NEW-POST-TEXT", newPostText:newPostText})
+
 // export const state: stateType = {
 //     profilePage: {
 //         postData: [
