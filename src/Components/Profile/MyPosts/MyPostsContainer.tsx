@@ -1,15 +1,13 @@
 import React from "react";
-import s from "./MyPosts.module.css"
-import Post from "./Post/Post";
-import {postDataType} from "../../../redux/store";
-import {AddTextItem} from "../../AddTextItem/AddTextItem";
+import MyPosts from "./MyPosts";
+import {storeType} from "../../../App";
+import {addNewPostCreateAction, changeNewPostTextCreateAction} from "../../../redux/profilePage-reducer";
 
 
-type postDataPropsType = {
-    onChangePostText:(text:string) => void
-    onClickAddPost:() => void
-    postData: postDataType[]
-    newPostText: string
+type storePropsType = {
+    store: storeType
+    // postData: postDataType[]
+    // newPostText: string
     // dispatch:(action:actionsType) => void
     // addPost: (postContent: string) => void
     // addPost: () => void
@@ -17,10 +15,9 @@ type postDataPropsType = {
 }
 
 
+const MyPostsContainer = (props: storePropsType) => {
 
-
-const MyPosts = (props: postDataPropsType) => {
-
+    const state = props.store.getState()
     // const addPostOnClickHandler = () => {
     //     // if (textAreaPostRef.current) {
     //     //     props.addPost(textAreaPostRef.current.value)
@@ -48,35 +45,28 @@ const MyPosts = (props: postDataPropsType) => {
     //             <button onClick={addPostOnClickHandler}>Add new post</button>
     //         </div>
     //     </div>
-    const mappedPostBlock =
-        <div className={s.posts}>
-            {props.postData.map(p => {
-                return (
-                    <Post key={p.id} postContent={p.postContent}/>
-                )
-            })}
-        </div>
+    // const mappedPostBlock =
+    //     <div className={s.posts}>
+    //         {state.profilePage.postData.map(p => {
+    //             return (
+    //                 <Post key={p.id} postContent={p.postContent}/>
+    //             )
+    //         })}
+    //     </div>
 
-    const onChangePostTextCallBack = (text:string) => props.onChangePostText(text)
-    const onClickAddPostCallBack = () => props.onClickAddPost()
+    const onChangePostText = (text: string) => props.store.dispatch(changeNewPostTextCreateAction(text))
+    const onClickAddPost = () => props.store.dispatch(addNewPostCreateAction())
 
     return (
-        <div className={s.posts_title}>
-            <h3>My posts</h3>
-            {/*{addPostsBlock}*/}
-            <AddTextItem
-                value={props.newPostText}
-                buttonName={"Add new post"}
-                onChangeCallback={onChangePostTextCallBack}
-                onClickCallback={onClickAddPostCallBack}
-            />
-
-            {mappedPostBlock}
-        </div>
-    )
+        <MyPosts
+            postData={state.profilePage.postData}
+            newPostText={state.profilePage.newPostText}
+            onChangePostText={onChangePostText}
+            onClickAddPost={onClickAddPost}
+        />)
 
 
 }
 
-export default MyPosts;
+export default MyPostsContainer;
 

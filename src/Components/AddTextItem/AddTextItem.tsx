@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import s from "../../Dialogs.module.css";
+import s from "../Dialogs/Dialogs.module.css";
 
 type AddTextItemPropsType = {
     value:string

@@ -1,9 +1,10 @@
 import React from 'react';
 import './index.css';
-// import {addNewPost, changeNewPostText, state, stateType, subscribe, store} from "./redux/state";
-import {stateType, store} from "./redux/state";
+import {store} from "./redux/redux-store";
 import ReactDOM from "react-dom";
 import App from "./App";
+import {dialogsPage, friendsPage, profilePageType} from "./redux/store";
+import {EmptyObject} from "redux";
 
 
 
@@ -59,7 +60,7 @@ import App from "./App";
 //     );
 // }
 
-let renderEntireTree = (state:stateType) => {
+let renderEntireTree = (state:EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }) => {
     ReactDOM.render(
         <App
             // dialogItemData={dialogItemData}
@@ -74,4 +75,7 @@ let renderEntireTree = (state:stateType) => {
 
 renderEntireTree(store.getState())
 
-store.subscribe(renderEntireTree)
+store.subscribe(() => {
+    let state = store.getState()
+    renderEntireTree(state)
+})

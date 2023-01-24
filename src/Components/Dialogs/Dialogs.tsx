@@ -3,21 +3,19 @@ import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageItem} from "./MessageItem/MessageItem";
 import {
-    actionType,
-    addNewMessageBodyCreateAction,
-    changeNewMessageTextCreateAction,
     dialogItemDataType,
     messageItemDataType
-} from "../../redux/state";
-import {AddTextItem} from "./MessageItem/AddMessage/AddTextItem";
-// import {dialogItemType, messageItemType} from "../../index";
+} from "../../redux/store";
+import {AddTextItem} from "../AddTextItem/AddTextItem";
+
 
 
 type DialogsDataPropsType = {
     dialogItemData: dialogItemDataType[]
     messageItemData: messageItemDataType[]
-    newMessageBody: string
-    dispatch:(action:actionType) => void
+    onChangeMessageBody: (text:string) => void
+    onClickAddMessageBody: () => void
+    newMessageBody:string
 }
 
 
@@ -67,7 +65,6 @@ export const Dialogs = (props: DialogsDataPropsType) => {
     //     props.dispatch(changeNewMessageTextCreateAction(newText))
     //     // props.dispatch({type:"CHANGE-NEW-MESSAGE-TEXT", newMessageBody:newText})
     // }
-
     // const dialogsAddMessageBlock =
     //     <div className={s.createMessageWrapper}>
     //         <div className={s.newPost_block}>
@@ -80,19 +77,18 @@ export const Dialogs = (props: DialogsDataPropsType) => {
     //         </div>
     //     </div>
 
-    const onChangeMessageBody = (text:string) => {props.dispatch(changeNewMessageTextCreateAction(text))}
-    const onClickAddMessageBody = () => props.dispatch(addNewMessageBodyCreateAction())
+    const onChangeMessageBodyCallBack = (text:string) => props.onChangeMessageBody(text)
+    const onClickAddMessageBodyCallBack = () => props.onClickAddMessageBody()
 
     return (
         <div className={s.dialogs}>
             {mappedDialog}
             {mappedMessage}
-            {/*{dialogsAddMessageBlock}*/}
             <AddTextItem
                 value={props.newMessageBody}
                 buttonName={"Add new message"}
-                onChangeCallback={onChangeMessageBody}
-                onClickCallback={onClickAddMessageBody}
+                onChangeCallback={onChangeMessageBodyCallBack}
+                onClickCallback={onClickAddMessageBodyCallBack}
             />
         </div>
     )

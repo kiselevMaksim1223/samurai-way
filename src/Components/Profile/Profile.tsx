@@ -1,21 +1,21 @@
 import React from "react";
 import s from "./Profile.module.css"
-import MyPosts from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {actionType, postDataType} from "../../redux/state";
-// import {postDataType} from "../../index";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {store} from "../../redux/redux-store";
 
 
-type profileDataType = {
-    postData:postDataType[]
-    newTextPost:string
-    dispatch:(action:actionType) => void
-    // addPost:(postContent:string) => void
-    // addPost:() => void
-    // changeNewPostText: (newPostText: string) => void
-}
 
-const Profile = (props:profileDataType) => {
+// type profileDataType = {
+//     // postData:postDataType[]
+//     // newTextPost:string
+//     // dispatch:(action:actionsType) => void
+//     // addPost:(postContent:string) => void
+//     // addPost:() => void
+//     // changeNewPostText: (newPostText: string) => void
+// }
+
+const Profile = () => {
 
     // const postData:postDataType[] = [
     //     {id:1, postContent:"My first post"},
@@ -27,16 +27,15 @@ const Profile = (props:profileDataType) => {
 
     return <div className={s.content}>
         <ProfileInfo />
-        <MyPosts
-            postData={props.postData}
-            newPostText={props.newTextPost}
-            dispatch={props.dispatch}
+        <MyPostsContainer
+            store = {store}
+            // postData={props.postData}
+            // newPostText={props.newTextPost}
+            // dispatch={props.dispatch}
             // addPost = {props.dispatch}
             // changeNewPostText ={props.dispatch}
         />
     </div>
-
-
 }
 
 export default Profile;

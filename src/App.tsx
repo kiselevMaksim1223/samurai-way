@@ -3,13 +3,16 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navigation/Navigation";
 import Profile from "./Components/Profile/Profile";
-import {Dialogs} from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {stateType, storeType} from "./redux/state";
-// import {dialogItemType, messageItemType, postDataType} from "./index";
+import {Friends} from "./Components/Friends/Friends";
+import {EmptyObject, Store} from "redux";
+import {actionsType, dialogsPage, friendsPage, profilePageType} from "./redux/store";
+import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
+import {store} from "./redux/redux-store";
+
 
 // type AppDataPropsType = {
 //     dialogItemData: dialogItemType[]
@@ -17,8 +20,10 @@ import {stateType, storeType} from "./redux/state";
 //     postData: postDataType[]
 // }
 
+export type storeType = Store<EmptyObject & {profilePage: profilePageType, dialogsPage: dialogsPage, friendsPage: friendsPage}, actionsType>
+
 type AppStateType = {
-    state: stateType
+    state: EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }
     store: storeType
     // addPost:(postContent:string) => void
     // addPost:() => void
@@ -30,24 +35,27 @@ const App = (props: AppStateType) => {
 
     const DialogComponent = () => {
         return (
-            <Dialogs
-                // dialogItemData={props.dialogItemData}
-
-                dialogItemData={props.state.dialogsPage.dialogItemData}
-                messageItemData={props.state.dialogsPage.messageItemData}
-                newMessageBody={props.state.dialogsPage.newMessageBody}
-                dispatch={props.store.dispatch.bind(props.store)}/>
+            <DialogsContainer
+                store = {store}
+            />
         )
     }
 
     const ProfileComponent = () => {
         return (
             <Profile
-                postData={props.state.profilePage.postData}
-                newTextPost={props.state.profilePage.newPostText}
-                dispatch={props.store.dispatch.bind(props.store)}
+
+                // postData={props.state.profilePage.postData}
+                // newTextPost={props.state.profilePage.newPostText}
+                // dispatch={props.store.dispatch.bind(props.store)}
                 // changeNewPostText = {props.store.dispatch.bind(props.store)}
             />
+        )
+    }
+
+    const FriendsComponents = () => {
+        return (
+            <Friends friendPage = {props.state.friendsPage}/>
         )
     }
 
@@ -57,11 +65,10 @@ const App = (props: AppStateType) => {
                 <Header/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    {/*<Route path="/profile" component={Profile}/>*/}
                     <Route path="/profile" render={ProfileComponent}/>
-                    {/*<Route path="/dialogs" component={Dialogs}/>*/}
-                    <Route path="/dialogs" render={DialogComponent}/>
                     <Route path="/news" component={News}/>
+                    <Route path="/friends" component={FriendsComponents}/>
+                    <Route path="/dialogs" render={DialogComponent}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
                 </div>
