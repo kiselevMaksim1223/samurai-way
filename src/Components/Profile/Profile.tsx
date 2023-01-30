@@ -1,8 +1,8 @@
 import React from "react";
 import s from "./Profile.module.css"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {store} from "../../redux/redux-store";
+import {MyPostsContainerSuper} from "./MyPosts/MyPostsContainer";
+
 
 
 
@@ -27,14 +27,17 @@ const Profile = () => {
 
     return <div className={s.content}>
         <ProfileInfo />
-        <MyPostsContainer
-            store = {store}
-            // postData={props.postData}
-            // newPostText={props.newTextPost}
-            // dispatch={props.dispatch}
-            // addPost = {props.dispatch}
-            // changeNewPostText ={props.dispatch}
-        />
+        <MyPostsContainerSuper/>
+
+        {/*<MyPostsContainer*/}
+        {/*    store = {store}*/}
+        {/*    // postData={props.postData}*/}
+        {/*    // newPostText={props.newTextPost}*/}
+        {/*    // dispatch={props.dispatch}*/}
+        {/*    // addPost = {props.dispatch}*/}
+        {/*    // changeNewPostText ={props.dispatch}*/}
+        {/*/>*/}
+
     </div>
 }
 

@@ -3,14 +3,14 @@ import './App.css';
 import Header from "./Components/Header/Header";
 import Navbar from "./Components/Navigation/Navigation";
 import Profile from "./Components/Profile/Profile";
-import {BrowserRouter, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
 import {Friends} from "./Components/Friends/Friends";
 import {EmptyObject, Store} from "redux";
 import {actionsType, dialogsPage, friendsPage, profilePageType} from "./redux/store";
-import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
+import {SuperDialogContainer} from "./Components/Dialogs/DialogsContainer";
 import {store} from "./redux/redux-store";
 
 
@@ -23,21 +23,22 @@ import {store} from "./redux/redux-store";
 export type storeType = Store<EmptyObject & {profilePage: profilePageType, dialogsPage: dialogsPage, friendsPage: friendsPage}, actionsType>
 
 type AppStateType = {
-    state: EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }
-    store: storeType
+    // state: EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }
+    // store: storeType
     // addPost:(postContent:string) => void
     // addPost:() => void
     // changeNewPostText: (newPostText: string) => void
 }
 
 
-const App = (props: AppStateType) => {
+const App = () => {
 
     const DialogComponent = () => {
         return (
-            <DialogsContainer
-                store = {store}
-            />
+            // <DialogsContainer
+            //     store = {store}
+            // />
+            <SuperDialogContainer/>
         )
     }
 
@@ -55,12 +56,11 @@ const App = (props: AppStateType) => {
 
     const FriendsComponents = () => {
         return (
-            <Friends friendPage = {props.state.friendsPage}/>
+            <Friends friendPage = {store.getState().friendsPage}/>
         )
     }
 
     return (
-        <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar/>
@@ -73,7 +73,6 @@ const App = (props: AppStateType) => {
                     <Route path="/settings" component={Settings}/>
                 </div>
             </div>
-        </BrowserRouter>
     );
 }
 

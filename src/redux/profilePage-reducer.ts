@@ -1,4 +1,4 @@
-import {actionsType, profilePageType} from "./store";
+import {actionsType, addNewPostActionType, changeNewPostActionType, profilePageType} from "./store";
 
 let initialState = {
             postData: [
@@ -20,14 +20,14 @@ export const profilePageReducer = (state: profilePageType = initialState, action
                 //сообщение берем из стейта, так как оно после ввода в ->//
                 // -> текс эреа попадает в стейт//
             }
-            state.postData.push(newPost)
-            state.newPostText = ""
-            return state;
+            // state.postData.push(newPost)
+            // state.newPostText = ""
+            return {...state, postData:[...state.postData, newPost], newPostText:""}
         case "CHANGE-NEW-POST-TEXT":
-            if (action.newPostText != null) {
-                state.newPostText = action.newPostText
-            }
-            return state;
+            // if (action.newPostText != null) {
+            //     state.newPostText = action.newPostText
+            // }
+            return {...state, newPostText: action.newPostText}
         default: return state;
     }
 
@@ -35,9 +35,9 @@ export const profilePageReducer = (state: profilePageType = initialState, action
 }
 
 export const addNewPostCreateAction
-    :(() => actionsType) //create Action type
+    :(() => addNewPostActionType) //create Action type
     = () => ({type:"ADD-NEW-POST"})
 
 export const changeNewPostTextCreateAction
-    :((newPostText:string) => actionsType) //create Action type
+    :((newPostText:string) => changeNewPostActionType) //create Action type
     = (newPostText) =>  ({type:"CHANGE-NEW-POST-TEXT", newPostText:newPostText})

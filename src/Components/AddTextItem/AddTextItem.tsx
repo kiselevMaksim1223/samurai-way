@@ -15,6 +15,7 @@ export const AddTextItem = (props:AddTextItemPropsType) => {
     }
 
     const onChangeTextHandler = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
         let itemText = e.currentTarget.value
         props.onChangeCallback(itemText)
     }

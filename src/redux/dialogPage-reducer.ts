@@ -1,4 +1,4 @@
-import {actionsType, dialogsPage} from "./store";
+import {actionsType, addNewMessageActionType, changeNewMessageTextActionType, dialogsPage} from "./store";
 
 let initialState = {
             dialogItemData: [
@@ -22,23 +22,24 @@ export const dialogPageReducer = (state:dialogsPage = initialState, action:actio
     switch (action.type) {
         case "ADD-NEW-MESSAGE":
             const newMessageBody = {id: 5, message: state.newMessageBody}
-            state.messageItemData.push(newMessageBody)
-            state.newMessageBody = ""
-            return state
+            // state.messageItemData.push(newMessageBody)
+            // state.newMessageBody = ""
+            return {...state, messageItemData:[...state.messageItemData, newMessageBody], newMessageBody: ""}
+
         case "CHANGE-NEW-MESSAGE-TEXT":
-            if (action.newMessageBody != null) {
-                state.newMessageBody = action.newMessageBody
-            }
-            return state
+            // if (action.newMessageBody != null) {
+            //     state.newMessageBody = action.newMessageBody
+            // }
+            return {...state, newMessageBody:action.newMessageBody}
         default: return state
     }
 
 }
 
 export const addNewMessageBodyCreateAction
-    :(() => actionsType) //create Action type
+    :(() => addNewMessageActionType) //create Action type
     = () => ({type:"ADD-NEW-MESSAGE"})
 
 export const changeNewMessageTextCreateAction
-    :((newMessageBody:string)=> actionsType) //create Action type
+    :((newMessageBody:string)=> changeNewMessageTextActionType) //create Action type
     = (newMessageBody) => ({type:"CHANGE-NEW-MESSAGE-TEXT", newMessageBody:newMessageBody})

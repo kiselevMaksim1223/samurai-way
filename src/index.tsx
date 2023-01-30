@@ -3,11 +3,8 @@ import './index.css';
 import {store} from "./redux/redux-store";
 import ReactDOM from "react-dom";
 import App from "./App";
-import {dialogsPage, friendsPage, profilePageType} from "./redux/store";
-import {EmptyObject} from "redux";
-
-
-
+import {BrowserRouter} from "react-router-dom";
+import {Provider} from "react-redux";
 
 
 // export type dialogItemType = {
@@ -60,22 +57,27 @@ import {EmptyObject} from "redux";
 //     );
 // }
 
-let renderEntireTree = (state:EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }) => {
+let renderEntireTree = () => {
     ReactDOM.render(
-        <App
-            // dialogItemData={dialogItemData}
-            // messageItemData={messageItemData}
-            // postData ={postData}
-            state = {state}
-            store = {store}
-        />,
+        <Provider store={store}>
+            <BrowserRouter>
+                <App
+                    // dialogItemData={dialogItemData}
+                    // messageItemData={messageItemData}
+                    // postData ={postData}
+                    // state={state}
+                    // store={store}
+                />
+            </BrowserRouter>
+        </Provider>
+        ,
         document.getElementById('root')
     );
 }
 
-renderEntireTree(store.getState())
+renderEntireTree()
 
 store.subscribe(() => {
-    let state = store.getState()
-    renderEntireTree(state)
+
+    renderEntireTree()
 })

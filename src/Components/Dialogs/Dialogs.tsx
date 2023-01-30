@@ -13,9 +13,9 @@ import {AddTextItem} from "../AddTextItem/AddTextItem";
 type DialogsDataPropsType = {
     dialogItemData: dialogItemDataType[]
     messageItemData: messageItemDataType[]
+    newMessageBody:string
     onChangeMessageBody: (text:string) => void
     onClickAddMessageBody: () => void
-    newMessageBody:string
 }
 
 
@@ -35,7 +35,7 @@ export const Dialogs = (props: DialogsDataPropsType) => {
     //      {id:3, message:"Nonononnono"},
     //      {id:4, message:"FUCK me"},
     //  ]
-
+    debugger;
     const mappedDialog =
         <div className={s.dialogsItems}>
             {props.dialogItemData.map(di => {
@@ -77,7 +77,7 @@ export const Dialogs = (props: DialogsDataPropsType) => {
     //         </div>
     //     </div>
 
-    const onChangeMessageBodyCallBack = (text:string) => props.onChangeMessageBody(text)
+    const onChangeMessageBodyCallBack = (text:string) =>  props.onChangeMessageBody(text)
     const onClickAddMessageBodyCallBack = () => props.onClickAddMessageBody()
 
     return (
