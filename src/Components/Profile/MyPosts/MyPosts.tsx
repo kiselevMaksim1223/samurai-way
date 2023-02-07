@@ -1,22 +1,8 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {postDataType} from "../../../redux/store";
 import {AddTextItem} from "../../AddTextItem/AddTextItem";
-
-
-type postDataPropsType = {
-    onChangePostText:(text:string) => void
-    onClickAddPost:() => void
-    postData: postDataType[]
-    newPostText: string
-    // dispatch:(action:actionsType) => void
-    // addPost: (postContent: string) => void
-    // addPost: () => void
-    // changeNewPostText: (newPostText: string) => void
-}
-
-
+import {postDataPropsType} from "./MyPostsContainer";
 
 
 const MyPosts = (props: postDataPropsType) => {
@@ -74,8 +60,6 @@ const MyPosts = (props: postDataPropsType) => {
             {mappedPostBlock}
         </div>
     )
-
-
 }
 
 export default MyPosts;

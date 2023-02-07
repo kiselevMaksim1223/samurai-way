@@ -3,9 +3,6 @@ import s from "./Profile.module.css"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainerSuper} from "./MyPosts/MyPostsContainer";
 
-
-
-
 // type profileDataType = {
 //     // postData:postDataType[]
 //     // newTextPost:string

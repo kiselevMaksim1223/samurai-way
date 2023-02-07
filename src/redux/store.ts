@@ -1,63 +1,64 @@
+export {}
+// export type stateType = {
+//     profilePage: profilePageType
+//     dialogsPage: dialogsPage
+//     friendsPage: friendsPage
+// }
+// @ts-ignore
 
-export type stateType = {
-    profilePage: profilePageType
-    dialogsPage: dialogsPage
-    friendsPage: friendsPage
-}
+// export type profilePageType = {
+//     postData: postDataType[]
+//     newPostText:string
+// }
 
-export type profilePageType = {
-    postData: postDataType[]
-    newPostText:string
-}
+// export type dialogsPage = {
+//     dialogItemData: dialogItemDataType[]
+//     messageItemData: messageItemDataType[]
+//     newMessageBody:string
+// }
 
-export type dialogsPage = {
-    dialogItemData: dialogItemDataType[]
-    messageItemData: messageItemDataType[]
-    newMessageBody:string
-}
+// export type friendsPage = {
+//     friendsList: friendListItemType[]
+// }
 
-export type friendsPage = {
-    friendsList: friendListItemType[]
-}
+// export type dialogItemDataType = {
+//     id: number
+//     name: string
+// }
+//
+// export type messageItemDataType = {
+//     id: number
+//     message: string
+// }
 
-export type dialogItemDataType = {
-    id: number
-    name: string
-}
+// export type postDataType = {
+//     id: number
+//     postContent: string
+// }
 
-export type messageItemDataType = {
-    id: number
-    message: string
-}
+// export type friendListItemType = {
+//     id: number
+//     friend: string
+//     Avatar: string
+// }
 
-export type postDataType = {
-    id: number
-    postContent: string
-}
-
-export type friendListItemType = {
-    id: number
-    friend: string
-    Avatar: string
-}
-
-export type actionsType = addNewPostActionType | changeNewPostActionType | addNewMessageActionType | changeNewMessageTextActionType
-
-
-export type addNewPostActionType = {
-    type: "ADD-NEW-POST"
-}
-export type changeNewPostActionType = {
-    type: "CHANGE-NEW-POST-TEXT"
-    newPostText:string
-}
-export type addNewMessageActionType = {
-    type: "ADD-NEW-MESSAGE"
-}
-export type changeNewMessageTextActionType = {
-    type: "CHANGE-NEW-MESSAGE-TEXT"
-    newMessageBody:string
-}
+// export type actionsType = addNewPostActionType | changeNewPostActionType | addNewMessageActionType | changeNewMessageTextActionType
+//
+//
+// export type addNewPostActionType = {
+//     type: "ADD-NEW-POST"
+// }
+// export type changeNewPostActionType = {
+//     type: "CHANGE-NEW-POST-TEXT"
+//     newPostText:string
+// }
+// export type addNewMessageActionType = {
+//     type: "ADD-NEW-MESSAGE"
+// }
+// export type changeNewMessageTextActionType = {
+//     type: "CHANGE-NEW-MESSAGE-TEXT"
+//     newMessageBody:string
+// }
 
 // export type storeType = {
 //     _state:stateType

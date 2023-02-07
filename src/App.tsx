@@ -7,37 +7,15 @@ import {Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {Friends} from "./Components/Friends/Friends";
-import {EmptyObject, Store} from "redux";
-import {actionsType, dialogsPage, friendsPage, profilePageType} from "./redux/store";
 import {SuperDialogContainer} from "./Components/Dialogs/DialogsContainer";
-import {store} from "./redux/redux-store";
-
-
-// type AppDataPropsType = {
-//     dialogItemData: dialogItemType[]
-//     messageItemData: messageItemType[]
-//     postData: postDataType[]
-// }
-
-export type storeType = Store<EmptyObject & {profilePage: profilePageType, dialogsPage: dialogsPage, friendsPage: friendsPage}, actionsType>
-
-type AppStateType = {
-    // state: EmptyObject & { friendsPage: friendsPage; dialogsPage: dialogsPage; profilePage: profilePageType }
-    // store: storeType
-    // addPost:(postContent:string) => void
-    // addPost:() => void
-    // changeNewPostText: (newPostText: string) => void
-}
+import {FriendsContainer} from "./Components/Friends/FriendsContainer";
+import {UsersContainer} from "./Components/users/UsersContainer";
 
 
 const App = () => {
 
     const DialogComponent = () => {
         return (
-            // <DialogsContainer
-            //     store = {store}
-            // />
             <SuperDialogContainer/>
         )
     }
@@ -45,18 +23,13 @@ const App = () => {
     const ProfileComponent = () => {
         return (
             <Profile
-
-                // postData={props.state.profilePage.postData}
-                // newTextPost={props.state.profilePage.newPostText}
-                // dispatch={props.store.dispatch.bind(props.store)}
-                // changeNewPostText = {props.store.dispatch.bind(props.store)}
             />
         )
     }
 
     const FriendsComponents = () => {
         return (
-            <Friends friendPage = {store.getState().friendsPage}/>
+            <FriendsContainer />
         )
     }
 
@@ -71,6 +44,7 @@ const App = () => {
                     <Route path="/dialogs" render={DialogComponent}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
+                    <Route path="/users" component={UsersContainer}/>
                 </div>
             </div>
     );

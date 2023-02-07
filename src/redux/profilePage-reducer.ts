@@ -1,6 +1,16 @@
-import {actionsType, addNewPostActionType, changeNewPostActionType, profilePageType} from "./store";
+import {actionsType, addNewPostActionType, changeNewPostActionType} from "./redux-store";
 
-let initialState = {
+export type postDataType = {
+    id: number
+    postContent: string
+}
+
+export type profilePageType = {
+    postData: postDataType[]
+    newPostText:string
+}
+
+let initialState:profilePageType = {
             postData: [
                 {id: 1, postContent: "My first post"},
                 {id: 2, postContent: "HelloFW"},
@@ -11,7 +21,8 @@ let initialState = {
             newPostText: "SAMURAIS"
         }
 
-export const profilePageReducer = (state: profilePageType = initialState, action: actionsType) => {
+
+export const profilePageReducer = (state: profilePageType = initialState, action: actionsType):profilePageType => {
     switch (action.type) {
         case "ADD-NEW-POST":
             const newPost = {
@@ -20,18 +31,11 @@ export const profilePageReducer = (state: profilePageType = initialState, action
                 //сообщение берем из стейта, так как оно после ввода в ->//
                 // -> текс эреа попадает в стейт//
             }
-            // state.postData.push(newPost)
-            // state.newPostText = ""
             return {...state, postData:[...state.postData, newPost], newPostText:""}
         case "CHANGE-NEW-POST-TEXT":
-            // if (action.newPostText != null) {
-            //     state.newPostText = action.newPostText
-            // }
             return {...state, newPostText: action.newPostText}
         default: return state;
     }
-
-
 }
 
 export const addNewPostCreateAction

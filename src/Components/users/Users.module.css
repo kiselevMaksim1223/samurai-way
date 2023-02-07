@@ -1,0 +1,20 @@
+.usersContainer{
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.userItem{
+
+    padding: 5px;
+}
+
+.imgBlock>img{
+    border-radius: 2px;
+    width: 80px;
+    height: 100px;
+}
+
+.userName{
+margin: 0 0 0 0;
+}
