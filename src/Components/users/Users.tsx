@@ -1,62 +1,62 @@
 import React from 'react';
 import s from "./Users.module.css"
-import {usersPropsType} from "./UsersContainer";
 import anna from "../Friends/avas/Anna.jpg";
-import axios from "axios";
+import {userItemType} from "../../redux/user-page-reducer";
 
 
-export const Users = (props: usersPropsType) => {
+type usersType = {
+    items:userItemType[]
+    totalCount:number
+    usersOnPage:number
+    currentPage:number
+    onClickChangePageHandler: (currentPage:number) => void
+    onClickFollowHandler: (isFollow:boolean, userId:number) => void
+    onClickUnfollowHandler:(isFollow:boolean, userId:number) => void
 
-    if (props.friend_usersPage.items.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            console.log(response)
-            props.setUsers(response.data.items)
-        })
+}
 
+export const Users = (props: usersType) => {
+
+    const countOfPages: number = Math.ceil(props.totalCount / props.usersOnPage)
+    const pages: number[] = []
+    for (let i = 1; i <= countOfPages; i++) {
+        pages.push(i)
     }
+    //карусель страниц
+    const CPFirst = props.currentPage - 2 < 0 ? 0 : props.currentPage - 2
+    const CPLast = (props.currentPage + 2)
+    const slicedPages = pages.slice(CPFirst, CPLast)
 
+    return (<>
+            <div className={s.pages}>
+                {slicedPages.map((p, i) => {
+                    return <span key={i} onClick={() => props.onClickChangePageHandler(p)}
+                                 className={props.currentPage === p ? s.span + " " + s.currentPage : s.span}>
+                        {p}
+                    </span>
+                })}
+                <span >{`...${pages[pages.length - 1]}`}</span>
+            </div>
 
-
-    const onClickFollowHandler = (isFollowed: boolean, userId: number) => {
-        console.log(isFollowed)
-        return (
-            () => {
-                return props.follow(isFollowed, userId)
-            }
-
-        )
-    }
-
-    const onClickUnfollowHandler = (isFollowed: boolean,userId: number) => {
-        console.log(isFollowed)
-        return (
-            () => {
-                return props.unFollow(isFollowed,userId)
-            }
-
-        )
-    }
-
-    const mappedUsers =
-        props.friend_usersPage.items.map(u => {
-            return (
-                <div key={u.id} className={s.userItem}>
-                    <div className={s.imgBlock}><img alt={"wait"} src={u.photos.large !== null ? u.photos.large : anna}/></div>
-                    <div>
-                        <p className={s.userName}>{u.name}</p>
-                        {u.followed
-                            ? <button onClick={onClickUnfollowHandler(u.followed, u.id)}>UnFollow</button>
-                            :<button onClick={onClickFollowHandler(u.followed, u.id)}>Follow</button>}
-                    </div>
-                </div>
-            )
-        })
-
-
-    return (
-        <div className={s.usersContainer}>
-            {mappedUsers}
-        </div>
+            <div className={s.usersContainer}>
+                {props.items.map(u => {
+                    return (
+                        <div key={u.id} className={s.userItem}>
+                            <div className={s.imgBlock}>
+                                <img alt={"213"}
+                                     src={u.photos.large !== null ? u.photos.large : anna}/>
+                            </div>
+                            <div>
+                                <p className={s.userName}>{u.name}</p>
+                                {u.followed
+                                    ? <button onClick={() => props.onClickUnfollowHandler(u.followed, u.id)}>UnFollow</button>
+                                    : <button onClick={() => props.onClickFollowHandler(u.followed, u.id)}>Follow</button>}
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        </>
     );
 };
 

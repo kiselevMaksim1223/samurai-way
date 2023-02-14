@@ -9,10 +9,22 @@ export const CHANGE_NEW_MESSAGE_TEXT = "CHANGE-NEW-MESSAGE-TEXT"
 export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
 export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"
 export const SET_USERS = "SET-USERS"
+export const SET_PAGE = "SET-PAGE"
+export const SET_TOTAL_USER_COUNT = "SET-TOTAL-USER-COUNT"
+export const SET_IS_LOADING = "SET-IS-LOADING"
 // export const SET_FRIENDS = "SET-FRIENDS"
 
 
-export type actionsType = addNewPostActionType | changeNewPostActionType | addNewMessageActionType | changeNewMessageTextActionType | followFriendsAT | unfollowFriendsAT | setUsersAT
+export type actionsType = addNewPostActionType
+    | changeNewPostActionType
+    | addNewMessageActionType
+    | changeNewMessageTextActionType
+    | followFriendsAT
+    | unfollowFriendsAT
+    | setUsersAT
+    | setCurrentPageAT
+    | setTotalUsersCountAT
+    | setIsLoadingAT
 
 export type addNewPostActionType = {
     type: "ADD-NEW-POST"
@@ -44,6 +56,21 @@ export type unfollowFriendsAT = {
 export type setUsersAT = {
     type: typeof SET_USERS
     users: userItemType[]
+}
+
+export type setCurrentPageAT = {
+    type:typeof SET_PAGE,
+    currentPage:number
+}
+
+export type setTotalUsersCountAT = {
+    type: typeof SET_TOTAL_USER_COUNT
+    totalCount:number
+}
+
+export type setIsLoadingAT = {
+    type: typeof SET_IS_LOADING
+    isLoading:boolean
 }
 // export type setFriendsAT = {
 //     type: typeof SET_FRIENDS

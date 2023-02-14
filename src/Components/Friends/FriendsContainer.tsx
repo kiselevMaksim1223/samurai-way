@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {Friends} from "./Friends";
 import {AppStateType,unfollowFriendsAT} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-import {unfollowFriendsAC, usersPageType} from "../../redux/user-page-reducer";
+import {unfollowFriends, usersPageType} from "../../redux/user-page-reducer";
 
 
 type MapStateToProps = {
@@ -21,7 +21,7 @@ const MapStateToProps = (state:AppStateType):MapStateToProps => {
 const MapDispatchToProps = (dispatch:Dispatch):MapDispatchToProps => {
     return{
         unFollow: (isFollow, userID) => {
-            let action:unfollowFriendsAT= unfollowFriendsAC(isFollow, userID)
+            let action:unfollowFriendsAT= unfollowFriends(isFollow, userID)
             dispatch(action)
         }
     }
