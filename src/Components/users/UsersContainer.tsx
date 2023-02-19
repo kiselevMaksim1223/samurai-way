@@ -7,11 +7,32 @@ import {
     followFriends, setCurrentPage, setIsLoading, setTotalUsersCount,
     setUsers,
     unfollowFriends,
-    userItemType, usersPageType
 } from "../../redux/user-page-reducer";
 import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../Preloader/Preloader";
+
+type photosType = {
+    small:string | null
+    large:string | null
+}
+
+export type userItemType = {
+    name: string
+    id: number
+    uniqueUrlName:string | null
+    photos: photosType
+    status:string | null
+    followed:boolean
+}
+
+export type usersPageType = {
+    items: userItemType[]
+    totalCount:number
+    usersOnPage:number
+    currentPage:number
+    isLoading:boolean
+}
 
 
 export class UsersClass extends React.Component<usersPropsType, usersPageType> {

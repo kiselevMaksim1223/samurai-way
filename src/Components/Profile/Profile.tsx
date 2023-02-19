@@ -3,37 +3,16 @@ import s from "./Profile.module.css"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainerSuper} from "./MyPosts/MyPostsContainer";
 
-// type profileDataType = {
-//     // postData:postDataType[]
-//     // newTextPost:string
-//     // dispatch:(action:actionsType) => void
-//     // addPost:(postContent:string) => void
-//     // addPost:() => void
-//     // changeNewPostText: (newPostText: string) => void
-// }
+import {profileInfoType} from "../../redux/profilePage-reducer";
 
-const Profile = () => {
+export type profileType = {
+    profileInfo:profileInfoType | null
+}
 
-    // const postData:postDataType[] = [
-    //     {id:1, postContent:"My first post"},
-    //     {id:2, postContent:"HelloFW"},
-    //     {id:3, postContent:"Do you know Lil Peep?"},
-    //     {id:4, postContent:"Anna"},
-    //     {id:5, postContent:"Igor"},
-    // ]
-
+const Profile = (props:profileType) => {
     return <div className={s.content}>
-        <ProfileInfo />
+        <ProfileInfo profileInfo={props.profileInfo}/>
         <MyPostsContainerSuper/>
-
-        {/*<MyPostsContainer*/}
-        {/*    store = {store}*/}
-        {/*    // postData={props.postData}*/}
-        {/*    // newPostText={props.newTextPost}*/}
-        {/*    // dispatch={props.dispatch}*/}
-        {/*    // addPost = {props.dispatch}*/}
-        {/*    // changeNewPostText ={props.dispatch}*/}
-        {/*/>*/}
 
     </div>
 }

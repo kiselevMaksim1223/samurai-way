@@ -1,42 +1,47 @@
-import {
-    actionsType,
-    FOLLOW_FRIENDS,
-    followFriendsAT,
-    SET_IS_LOADING,
-    SET_PAGE,
-    SET_TOTAL_USER_COUNT,
-    SET_USERS,
-    setCurrentPageAT,
-    setIsLoadingAT,
-    setTotalUsersCountAT,
-    setUsersAT,
-    UNFOLLOW_FRIENDS,
-    unfollowFriendsAT
-} from "./redux-store";
+import {userItemType, usersPageType} from "../Components/users/UsersContainer";
 
+export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
+export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"
+export const SET_USERS = "SET-USERS"
+export const SET_PAGE = "SET-PAGE"
+export const SET_TOTAL_USER_COUNT = "SET-TOTAL-USER-COUNT"
+export const SET_IS_LOADING = "SET-IS-LOADING"
 
-type photosType = {
-    small:string | null
-    large:string | null
+export type followFriendsAT = {
+    type: typeof FOLLOW_FRIENDS
+    isFollow: boolean
+    userID:number
 }
 
-export type userItemType = {
-    name: string
-    id: number
-    uniqueUrlName:string | null
-    photos: photosType
-    status:string | null
-    followed:boolean
+export type unfollowFriendsAT = {
+    type: typeof UNFOLLOW_FRIENDS
+    isFollow: boolean
+    userID:number
 }
 
+export type setUsersAT = {
+    type: typeof SET_USERS
+    users: userItemType[]
+}
 
-export type usersPageType = {
-    items: userItemType[]
-    totalCount:number
-    usersOnPage:number
+export type setCurrentPageAT = {
+    type:typeof SET_PAGE,
     currentPage:number
+}
+
+export type setTotalUsersCountAT = {
+    type: typeof SET_TOTAL_USER_COUNT
+    totalCount:number
+}
+
+export type setIsLoadingAT = {
+    type: typeof SET_IS_LOADING
     isLoading:boolean
 }
+
+export type actionsType = followFriendsAT | unfollowFriendsAT | setUsersAT | setCurrentPageAT | setTotalUsersCountAT | setIsLoadingAT
+
+
 
 const initialState:usersPageType = {
     items: [],
@@ -69,8 +74,8 @@ export const userPageReducer = (state:usersPageType = initialState, action:actio
 }
 
 //переименуем AC в названия без AC для сокращения кода в mapDispatchToProps
-export const followFriends:((isFollow:boolean, userId:number) => followFriendsAT) = (isFollow, userId) => ({type: FOLLOW_FRIENDS, isFollow:isFollow, userID:userId})
-export const unfollowFriends:((isFollow:boolean, userId:number) => unfollowFriendsAT) = (isFollow, userId) => ({type: UNFOLLOW_FRIENDS, isFollow, userID:userId})
+export const followFriends:((isFollow:boolean, userId:number) => followFriendsAT) = (isFollow, userId) => ({type: FOLLOW_FRIENDS, isFollow:isFollow, userID:userId} )
+export const unfollowFriends:((isFollow:boolean, userId:number) => unfollowFriendsAT) = (isFollow, userId) => ({type: UNFOLLOW_FRIENDS, isFollow, userID:userId} )
 export const setUsers:((userList:userItemType[]) => setUsersAT) = (userList) => ({type: SET_USERS, users:userList})
 export const setCurrentPage:((currentPage:number) => setCurrentPageAT) = (currentPage) => ({type: "SET-PAGE", currentPage:currentPage})
 export const setTotalUsersCount:((totalUsersCount:number) => setTotalUsersCountAT) = (totalUsersCount) => ({type: SET_TOTAL_USER_COUNT, totalCount:totalUsersCount})

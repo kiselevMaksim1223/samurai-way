@@ -1,28 +1,74 @@
-import {actionsType, addNewPostActionType, changeNewPostActionType} from "./redux-store";
+
+
+
+
 
 export type postDataType = {
     id: number
     postContent: string
 }
 
-export type profilePageType = {
-    postData: postDataType[]
-    newPostText:string
+export type Contacts = {
+    facebook: string | null
+    website: string | null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null
+    github: string | null
+    mainLink: string | null
 }
 
-let initialState:profilePageType = {
-            postData: [
-                {id: 1, postContent: "My first post"},
-                {id: 2, postContent: "HelloFW"},
-                {id: 3, postContent: "Do you know Lil Peep?"},
-                {id: 4, postContent: "Anna"},
-                {id: 5, postContent: "Igor"},
-            ],
-            newPostText: "SAMURAIS"
-        }
+export type Photos = {
+    small: string;
+    large: string;
+}
+
+export type profileInfoType = {
+    aboutMe: string;
+    contacts: Contacts;
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string;
+    fullName: string;
+    userId: number;
+    photos: Photos;
+}
+
+export type profilePageType = {
+    postData: postDataType[]
+    newPostText: string
+    profileInfo:profileInfoType | null
+}
 
 
-export const profilePageReducer = (state: profilePageType = initialState, action: actionsType):profilePageType => {
+export type addNewPostAT = {
+    type: "ADD-NEW-POST"
+}
+export type changeNewPostAT = {
+    type: "CHANGE-NEW-POST-TEXT"
+    newPostText: string
+}
+export type setProfileInfoAT = {
+    type:"SET-PROFILE-INFO"
+    profileInfo:profileInfoType
+}
+
+
+type actionsType = addNewPostAT | changeNewPostAT | setProfileInfoAT
+
+let initialState: profilePageType = {
+    postData: [
+        {id: 1, postContent: "My first post"},
+        {id: 2, postContent: "HelloFW"},
+        {id: 3, postContent: "Do you know Lil Peep?"},
+        {id: 4, postContent: "Anna"},
+        {id: 5, postContent: "Igor"},
+    ],
+    newPostText: "SAMURAIS",
+    profileInfo: null
+}
+
+export const profilePageReducer = (state: profilePageType = initialState, action: actionsType): profilePageType => {
     switch (action.type) {
         case "ADD-NEW-POST":
             const newPost = {
@@ -31,17 +77,25 @@ export const profilePageReducer = (state: profilePageType = initialState, action
                 //сообщение берем из стейта, так как оно после ввода в ->//
                 // -> текс эреа попадает в стейт//
             }
-            return {...state, postData:[...state.postData, newPost], newPostText:""}
+            return {...state, postData: [...state.postData, newPost], newPostText: ""}
         case "CHANGE-NEW-POST-TEXT":
             return {...state, newPostText: action.newPostText}
-        default: return state;
+        case "SET-PROFILE-INFO":
+            return {...state, profileInfo:action.profileInfo}
+        default:
+            return state;
     }
 }
 
-export const addNewPostCreateAction
-    :(() => addNewPostActionType) //create Action type
-    = () => ({type:"ADD-NEW-POST"})
+export const addNewPost
+    : (() => addNewPostAT) //create Action type
+    = () => ({type: "ADD-NEW-POST"})
 
-export const changeNewPostTextCreateAction
-    :((newPostText:string) => changeNewPostActionType) //create Action type
-    = (newPostText) =>  ({type:"CHANGE-NEW-POST-TEXT", newPostText:newPostText})
+export const changeNewPostText
+    : ((newPostText: string) => changeNewPostAT) //create Action type
+    = (newPostText) => ({type: "CHANGE-NEW-POST-TEXT", newPostText: newPostText})
+
+export const setProfileInfo
+    :((profileInfo:profileInfoType) => setProfileInfoAT)
+    = (profileInfo) => ({type:"SET-PROFILE-INFO", profileInfo})
+

@@ -1,16 +1,18 @@
 import React from "react";
 import MyPosts from "./MyPosts";
 import {
-    addNewPostCreateAction,
-    changeNewPostTextCreateAction,
-    profilePageType
+    addNewPost,
+    changeNewPostText, postDataType,
 } from "../../../redux/profilePage-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 import {Dispatch} from "redux";
 
 
-type MapStateToProps = profilePageType
+type MapStateToProps = {
+    postData:postDataType[]
+    newPostText:string
+}
 
 type MapDispatchToProps = {
     onChangePostText: (text: string) => void
@@ -29,10 +31,10 @@ const mapStateToProps = (state:AppStateType):MapStateToProps => {
 const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToProps => {
     return{
         onChangePostText: (text: string) => {
-            dispatch(changeNewPostTextCreateAction(text))
+            dispatch(changeNewPostText(text))
         },
         onClickAddPost: () => {
-            dispatch(addNewPostCreateAction())
+            dispatch(addNewPost())
         }
     }
 }

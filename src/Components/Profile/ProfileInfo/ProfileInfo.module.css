@@ -4,6 +4,12 @@
 }
 
 .ava_desc{
-    font-size: 30px;
-    padding: 10px;
+    /*font-size: 30px;*/
+    /*padding: 10px;*/
+}
+
+.ava{
+    width: 200px;
+    height: 200px;
+    background-color: red;
 }

@@ -2,9 +2,9 @@ import {
     followFriends,
     setCurrentPage, setIsLoading, setTotalUsersCount,
     unfollowFriends,
-    userPageReducer,
-    usersPageType
+    userPageReducer
 } from "./user-page-reducer";
+import {usersPageType} from "../Components/users/UsersContainer";
 
 let initialState:usersPageType
 

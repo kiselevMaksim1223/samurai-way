@@ -1,17 +1,18 @@
 import React from 'react';
 import s from "./Users.module.css"
 import anna from "../Friends/avas/Anna.jpg";
-import {userItemType} from "../../redux/user-page-reducer";
+import {userItemType} from "./UsersContainer";
+import {NavLink} from "react-router-dom";
 
 
 type usersType = {
-    items:userItemType[]
-    totalCount:number
-    usersOnPage:number
-    currentPage:number
-    onClickChangePageHandler: (currentPage:number) => void
-    onClickFollowHandler: (isFollow:boolean, userId:number) => void
-    onClickUnfollowHandler:(isFollow:boolean, userId:number) => void
+    items: userItemType[]
+    totalCount: number
+    usersOnPage: number
+    currentPage: number
+    onClickChangePageHandler: (currentPage: number) => void
+    onClickFollowHandler: (isFollow: boolean, userId: number) => void
+    onClickUnfollowHandler: (isFollow: boolean, userId: number) => void
 
 }
 
@@ -35,7 +36,7 @@ export const Users = (props: usersType) => {
                         {p}
                     </span>
                 })}
-                <span >{`...${pages[pages.length - 1]}`}</span>
+                <span>{`...${pages[pages.length - 1]}`}</span>
             </div>
 
             <div className={s.usersContainer}>
@@ -43,14 +44,18 @@ export const Users = (props: usersType) => {
                     return (
                         <div key={u.id} className={s.userItem}>
                             <div className={s.imgBlock}>
-                                <img alt={"213"}
-                                     src={u.photos.large !== null ? u.photos.large : anna}/>
+                                <NavLink to={"/profile/" + u.id}>
+                                    <img alt={"213"}
+                                         src={u.photos.large !== null ? u.photos.large : anna}/>
+                                </NavLink>
                             </div>
                             <div>
                                 <p className={s.userName}>{u.name}</p>
                                 {u.followed
-                                    ? <button onClick={() => props.onClickUnfollowHandler(u.followed, u.id)}>UnFollow</button>
-                                    : <button onClick={() => props.onClickFollowHandler(u.followed, u.id)}>Follow</button>}
+                                    ? <button
+                                        onClick={() => props.onClickUnfollowHandler(u.followed, u.id)}>UnFollow</button>
+                                    : <button
+                                        onClick={() => props.onClickFollowHandler(u.followed, u.id)}>Follow</button>}
                             </div>
                         </div>
                     )
@@ -58,5 +63,6 @@ export const Users = (props: usersType) => {
             </div>
         </>
     );
-};
+}
+    ;
 
