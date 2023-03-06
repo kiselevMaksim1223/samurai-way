@@ -34,6 +34,10 @@ export type usersPageType = {
     isLoading:boolean
 }
 
+const settings = {
+    withCredentials:true,
+    "API-KEY": "b5fcdfe7-6baa-4918-9c3b-3910bf1accdc"
+}
 
 export class UsersClass extends React.Component<usersPropsType, usersPageType> {
 
@@ -44,7 +48,7 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
     componentDidMount() {
         this.props.setIsLoading(true)
         axios
-            .get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`)
+            .get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`, settings)
             .then(response => {
                 this.props.setIsLoading(false)
                 console.log(response)
@@ -65,7 +69,7 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
     onClickChangePageHandler = (currentPage: number) => {
         this.props.setIsLoading(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`, settings)
             .then(response => {
                 this.props.setIsLoading(false)
                 console.log(response)

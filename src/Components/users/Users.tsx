@@ -3,6 +3,7 @@ import s from "./Users.module.css"
 import anna from "../Friends/avas/Anna.jpg";
 import {userItemType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 
 type usersType = {
@@ -16,53 +17,74 @@ type usersType = {
 
 }
 
+const settings = {
+    withCredentials: true,
+    "API-KEY": "b5fcdfe7-6baa-4918-9c3b-3910bf1accdc"
+}
+
 export const Users = (props: usersType) => {
 
-    const countOfPages: number = Math.ceil(props.totalCount / props.usersOnPage)
-    const pages: number[] = []
-    for (let i = 1; i <= countOfPages; i++) {
-        pages.push(i)
-    }
-    //карусель страниц
-    const CPFirst = props.currentPage - 2 < 0 ? 0 : props.currentPage - 2
-    const CPLast = (props.currentPage + 2)
-    const slicedPages = pages.slice(CPFirst, CPLast)
+        const countOfPages: number = Math.ceil(props.totalCount / props.usersOnPage)
+        const pages: number[] = []
+        for (let i = 1; i <= countOfPages; i++) {
+            pages.push(i)
+        }
+        //карусель страниц
+        const CPFirst = props.currentPage - 2 < 0 ? 0 : props.currentPage - 2
+        const CPLast = (props.currentPage + 2)
+        const slicedPages = pages.slice(CPFirst, CPLast)
 
-    return (<>
-            <div className={s.pages}>
-                {slicedPages.map((p, i) => {
-                    return <span key={i} onClick={() => props.onClickChangePageHandler(p)}
-                                 className={props.currentPage === p ? s.span + " " + s.currentPage : s.span}>
+        return (<>
+                <div className={s.pages}>
+                    {slicedPages.map((p, i) => {
+                        return <span key={i} onClick={() => props.onClickChangePageHandler(p)}
+                                     className={props.currentPage === p ? s.span + " " + s.currentPage : s.span}>
                         {p}
                     </span>
-                })}
-                <span>{`...${pages[pages.length - 1]}`}</span>
-            </div>
+                    })}
+                    <span>{`...${pages[pages.length - 1]}`}</span>
+                </div>
 
-            <div className={s.usersContainer}>
-                {props.items.map(u => {
-                    return (
-                        <div key={u.id} className={s.userItem}>
-                            <div className={s.imgBlock}>
-                                <NavLink to={"/profile/" + u.id}>
-                                    <img alt={"213"}
-                                         src={u.photos.large !== null ? u.photos.large : anna}/>
-                                </NavLink>
+                <div className={s.usersContainer}>
+                    {props.items.map(u => {
+                        return (
+                            <div key={u.id} className={s.userItem}>
+                                <div className={s.imgBlock}>
+                                    <NavLink to={"/profile/" + u.id}>
+                                        <img alt={"213"}
+                                             src={u.photos.large !== null ? u.photos.large : anna}/>
+                                    </NavLink>
+                                </div>
+                                <div>
+                                    <p className={s.userName}>{u.name}</p>
+                                    {u.followed
+                                        ? <button
+                                            onClick={() => {
+
+                                                axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
+                                                    .then(response => {
+                                                        if (response.data.resultCode === 0) {
+                                                            props.onClickUnfollowHandler(u.followed, u.id)
+                                                        }
+                                                    })
+                                            }}>UnFollow</button>
+
+                                        : <button
+                                            onClick={() => {
+                                                axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
+                                                    .then(response => {
+                                                        if (response.data.resultCode === 0) {
+                                                            props.onClickFollowHandler(u.followed, u.id)
+                                                        }
+                                                    })
+                                            }}>Follow</button>}
+                                </div>
                             </div>
-                            <div>
-                                <p className={s.userName}>{u.name}</p>
-                                {u.followed
-                                    ? <button
-                                        onClick={() => props.onClickUnfollowHandler(u.followed, u.id)}>UnFollow</button>
-                                    : <button
-                                        onClick={() => props.onClickFollowHandler(u.followed, u.id)}>Follow</button>}
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-        </>
-    );
-}
-    ;
+                        )
+                    })}
+                </div>
+            </>
+        );
+    }
+;
 
