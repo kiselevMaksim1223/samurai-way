@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from "./Components/Header/Header";
+import {HeaderContainer} from "./Components/Header/HeaderCont";
 import Navbar from "./Components/Navigation/Navigation";
 import {Route} from "react-router-dom";
 import {News} from "./Components/News/News";
@@ -26,13 +26,19 @@ const App = () => {
             <FriendsContainer />
         )
     }
+    const ProfileContainerContainer = () => {
+
+        return (
+            <ProfileContainer />
+        )
+    }
 
     return (
             <div className="app-wrapper">
-                <Header/>
+                <HeaderContainer />
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile/:userId" component={ProfileContainer}/>
+                    <Route path="/profile/:userId?" render={ProfileContainerContainer}/>
                     <Route path="/news" component={News}/>
                     <Route path="/friends" component={FriendsComponents}/>
                     <Route path="/dialogs" render={DialogComponent}/>

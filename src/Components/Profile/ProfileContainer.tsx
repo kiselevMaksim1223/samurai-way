@@ -10,22 +10,22 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 
 export class ProfileClass extends React.Component<newProfilePropsType, profilePageType> {
 
-
     componentDidMount() {
-        debugger
-        const userId = this.props.match.params.userId
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+        let userId = this.props.match.params.userId
+        console.log(userId)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${!userId ? 2: userId}`)
             .then((response) => {
+                debugger
                 console.log(response)
                 this.props.setProfileInfo(response.data)
             })
     }
 
     render() {
+        console.log(this.props)
         return(
             <Profile profileInfo ={this.props.profileInfo}/>
             )
-
     }
 }
 
@@ -52,7 +52,7 @@ const MapStateToProps = (state:AppStateType) => {
    }}
 
 
-const WithRouteProfileContainer = withRouter(ProfileClass)
+// const WithRouteProfileContainer = withRouter(ProfileClass)
 
-export const ProfileContainer = connect(MapStateToProps, {setProfileInfo})(WithRouteProfileContainer)
+export const ProfileContainer = connect(MapStateToProps, {setProfileInfo})(withRouter(ProfileClass))
 

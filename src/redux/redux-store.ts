@@ -2,6 +2,7 @@ import {combineReducers, createStore} from "redux";
 import {profilePageReducer} from "./profilePage-reducer";
 import {dialogPageReducer} from "./dialogPage-reducer";
 import {userPageReducer} from "./user-page-reducer";
+import {authReducer} from "./auth-reducer";
 
 export const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE"
 export const CHANGE_NEW_MESSAGE_TEXT = "CHANGE-NEW-MESSAGE-TEXT"
@@ -22,9 +23,13 @@ export type changeNewMessageTextActionType = {
 let rootReducer = combineReducers({
     profilePage:profilePageReducer,
     dialogsPage:dialogPageReducer,
-    friends_usersPages:userPageReducer
+    friends_usersPages:userPageReducer,
+    auth:authReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
 export let store = createStore(rootReducer);
+
+//@ts-ignore
+window.store = store
