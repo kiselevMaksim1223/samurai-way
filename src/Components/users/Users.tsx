@@ -14,12 +14,8 @@ type usersType = {
     onClickChangePageHandler: (currentPage: number) => void
     onClickFollowHandler: (isFollow: boolean, userId: number) => void
     onClickUnfollowHandler: (isFollow: boolean, userId: number) => void
-
-}
-
-const settings = {
-    withCredentials: true,
-    "API-KEY": "b5fcdfe7-6baa-4918-9c3b-3910bf1accdc"
+    followingInProgress: Array<number>
+    setIsFollowing: (isFollowing:boolean, userId:number) => void
 }
 
 export const Users = (props: usersType) => {
@@ -63,24 +59,31 @@ export const Users = (props: usersType) => {
                                     <p className={s.userName}>{u.name}</p>
                                     {u.followed
                                         ? <button
+                                            // дизейблим кнопку методом проверки есть ли в массиве id пользователя которого мы анфоловим
+                                            disabled={props.followingInProgress.some(id => id === u.id)}
                                             onClick={() => {
+                                                props.setIsFollowing(true, u.id)
                                                 // axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
                                                 usersAPI.unFollowUser(u.id)
                                                     .then(res => {
                                                         if (res.resultCode === 0) {
                                                             props.onClickUnfollowHandler(u.followed, u.id)
                                                         }
+                                                        props.setIsFollowing(false, u.id)
                                                     })
                                             }}>UnFollow</button>
 
                                         : <button
+                                            disabled={props.followingInProgress.some(id => id === u.id)}
                                             onClick={() => {
+                                                props.setIsFollowing(true, u.id)
                                                 // axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
                                                 usersAPI.followUser(u.id)
                                                     .then(res => {
                                                         if (res.resultCode === 0) {
                                                             props.onClickFollowHandler(u.followed, u.id)
                                                         }
+                                                        props.setIsFollowing(false, u.id)
                                                     })
                                             }}>Follow</button>}
                                 </div>

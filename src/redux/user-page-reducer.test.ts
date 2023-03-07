@@ -1,10 +1,10 @@
 import {
     followFriends,
-    setCurrentPage, setIsLoading, setTotalUsersCount,
+    setCurrentPage, setIsFollowing, setIsLoading, setTotalUsersCount,
     unfollowFriends,
-    userPageReducer
+    userPageReducer, usersPageType
 } from "./user-page-reducer";
-import {usersPageType} from "../Components/users/UsersContainer";
+
 
 let initialState:usersPageType
 
@@ -48,7 +48,8 @@ beforeEach(() => {
         usersOnPage:5,
         totalCount:50,
         currentPage:2,
-        isLoading:false
+        isLoading:false,
+        followingInProgress:[],
     }
 })
 
@@ -91,5 +92,14 @@ test("isLoading should be changed to true", () => {
     const newState = userPageReducer(initialState, action)
 
     expect(newState.isLoading).toBe(true)
+})
+
+test("Following In Progress Should be change" , () => {
+
+    const action = setIsFollowing(true, 2222)
+    const  newState = userPageReducer(initialState, action)
+
+    expect(newState.followingInProgress).toBe(true)
+
 })
 

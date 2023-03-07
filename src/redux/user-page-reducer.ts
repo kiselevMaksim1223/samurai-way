@@ -1,4 +1,4 @@
-import {userItemType, usersPageType} from "../Components/users/UsersContainer";
+import {userItemType} from "../Components/users/UsersContainer";
 
 export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
 export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"
@@ -6,6 +6,8 @@ export const SET_USERS = "SET-USERS"
 export const SET_PAGE = "SET-PAGE"
 export const SET_TOTAL_USER_COUNT = "SET-TOTAL-USER-COUNT"
 export const SET_IS_LOADING = "SET-IS-LOADING"
+export const SET_IS_FOLLOWING = "SET-IS-FOLLOWING"
+
 
 export type followFriendsAT = {
     type: typeof FOLLOW_FRIENDS
@@ -39,16 +41,26 @@ export type setIsLoadingAT = {
     isLoading:boolean
 }
 
-export type actionsType = followFriendsAT | unfollowFriendsAT | setUsersAT | setCurrentPageAT | setTotalUsersCountAT | setIsLoadingAT
+export type setIsFollowingAT = ReturnType<typeof setIsFollowing>
 
+export type actionsType = followFriendsAT | unfollowFriendsAT | setUsersAT | setCurrentPageAT | setTotalUsersCountAT | setIsLoadingAT | setIsFollowingAT
 
+export type usersPageType = {
+    items: userItemType[]
+    totalCount:number
+    usersOnPage:number
+    currentPage:number
+    isLoading:boolean
+    followingInProgress:Array<number>
+}
 
 const initialState:usersPageType = {
     items: [],
     totalCount:0,
     usersOnPage:5,
     currentPage:1,
-    isLoading:false
+    isLoading:false,
+    followingInProgress:[] //сделали массив чтобы при нажатии дизейблить кнопки follow\unfollow пользователя которого мы хотим фоловить или анфоловить
 }
 
 export const userPageReducer = (state:usersPageType = initialState, action:actionsType):usersPageType => {
@@ -68,6 +80,11 @@ export const userPageReducer = (state:usersPageType = initialState, action:actio
             return {...state, totalCount:action.totalCount}
         case "SET-IS-LOADING":
             return {...state, isLoading:action.isLoading}
+        case SET_IS_FOLLOWING:
+            return {...state, followingInProgress:
+                    action.isFollowing
+                        ? [...state.followingInProgress, action.userId]
+                        : [...state.followingInProgress.filter(id => id !== action.userId)]}
         default:
             return state
     }
@@ -80,3 +97,4 @@ export const setUsers:((userList:userItemType[]) => setUsersAT) = (userList) => 
 export const setCurrentPage:((currentPage:number) => setCurrentPageAT) = (currentPage) => ({type: "SET-PAGE", currentPage:currentPage})
 export const setTotalUsersCount:((totalUsersCount:number) => setTotalUsersCountAT) = (totalUsersCount) => ({type: SET_TOTAL_USER_COUNT, totalCount:totalUsersCount})
 export const setIsLoading:((isLoading:boolean)=> setIsLoadingAT) = (isLoading) => ({type:SET_IS_LOADING, isLoading})
+export const setIsFollowing  = (isFollowing:boolean, userId:number) => ({type:SET_IS_FOLLOWING, isFollowing, userId} as const)

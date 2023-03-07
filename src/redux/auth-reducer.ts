@@ -1,4 +1,4 @@
-import {userItemType, usersPageType} from "../Components/users/UsersContainer";
+
 
 export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
 export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"

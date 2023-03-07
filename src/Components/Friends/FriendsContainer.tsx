@@ -2,8 +2,8 @@ import {connect} from "react-redux";
 import {Friends} from "./Friends";
 import {AppStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-import {unfollowFriends, unfollowFriendsAT} from "../../redux/user-page-reducer";
-import {usersPageType} from "../users/UsersContainer";
+import {unfollowFriends, unfollowFriendsAT, usersPageType} from "../../redux/user-page-reducer";
+
 
 
 type MapStateToProps = {

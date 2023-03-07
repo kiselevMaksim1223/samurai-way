@@ -4,9 +4,9 @@ import {
     AppStateType,
 } from "../../redux/redux-store";
 import {
-    followFriends, setCurrentPage, setIsLoading, setTotalUsersCount,
+    followFriends, setCurrentPage, setIsFollowing, setIsLoading, setTotalUsersCount,
     setUsers,
-    unfollowFriends,
+    unfollowFriends, usersPageType,
 } from "../../redux/user-page-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../Preloader/Preloader";
@@ -26,13 +26,7 @@ export type userItemType = {
     followed:boolean
 }
 
-export type usersPageType = {
-    items: userItemType[]
-    totalCount:number
-    usersOnPage:number
-    currentPage:number
-    isLoading:boolean
-}
+
 
 export class UsersClass extends React.Component<usersPropsType, usersPageType> {
 
@@ -127,6 +121,9 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
                     onClickChangePageHandler={this.onClickChangePageHandler}
                     onClickFollowHandler={this.onClickFollowHandler}
                     onClickUnfollowHandler={this.onClickUnfollowHandler}
+                    followingInProgress = {this.props.isFollowing}
+                    setIsFollowing = {this.props.setIsFollowing}
+
                 />}
         </>
     }
@@ -138,6 +135,7 @@ type MapStateToProps = {
     totalCount: number
     currentPage: number
     isLoading: boolean
+    isFollowing:Array<number>
 }
 type MapDispatchToProps = {
     followFriends: (isFollow: boolean, userId: number) => void
@@ -146,6 +144,7 @@ type MapDispatchToProps = {
     setCurrentPage:(currentPage: number) => void
     setTotalUsersCount:(setTotalUsersCount: number) => void
     setIsLoading: (isLoading:boolean) => void
+    setIsFollowing: (isFollowing:boolean, userId:number) => void
 }
 
 export type usersPropsType = MapStateToProps & MapDispatchToProps
@@ -156,7 +155,8 @@ const MapStateToProps = (state: AppStateType): MapStateToProps => {
         usersOnPage: state.friends_usersPages.usersOnPage,
         totalCount: state.friends_usersPages.totalCount,
         currentPage: state.friends_usersPages.currentPage,
-        isLoading: state.friends_usersPages.isLoading
+        isLoading: state.friends_usersPages.isLoading,
+        isFollowing: state.friends_usersPages.followingInProgress
     }
 }
 
@@ -195,6 +195,6 @@ export const UsersContainer = connect(
     // " ...если вы передаете в connect вторым аргументом не mapDispatchToProps,
     // а объект с AC, то connect оборачивает ваши AC в функцию-обертку () => store.dispatch(AC) и передаёт в props компонента."
     // типизация остается прежней!!!
-    {followFriends, unfollowFriends, setUsers, setCurrentPage, setTotalUsersCount, setIsLoading}
+    {followFriends, unfollowFriends, setUsers, setCurrentPage, setTotalUsersCount, setIsLoading, setIsFollowing}
 )
 (UsersClass)

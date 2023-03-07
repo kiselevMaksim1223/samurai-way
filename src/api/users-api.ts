@@ -1,5 +1,6 @@
-import {usersPageType} from "../Components/users/UsersContainer";
+
 import axios from "axios";
+import {usersPageType} from "../redux/user-page-reducer";
 
 const instance = axios.create({
     baseURL:"https://social-network.samuraijs.com/api/1.0/",
