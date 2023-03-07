@@ -3,7 +3,7 @@ import s from "./Users.module.css"
 import anna from "../Friends/avas/Anna.jpg";
 import {userItemType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {usersAPI} from "../../api/users-api";
 
 
 type usersType = {
@@ -37,8 +37,10 @@ export const Users = (props: usersType) => {
         return (<>
                 <div className={s.pages}>
                     {slicedPages.map((p, i) => {
-                        return <span key={i} onClick={() => props.onClickChangePageHandler(p)}
-                                     className={props.currentPage === p ? s.span + " " + s.currentPage : s.span}>
+                        return <span
+                            key={i} onClick={() => props.onClickChangePageHandler(p)}
+                            className={props.currentPage === p ? s.span + " " + s.currentPage : s.span}
+                        >
                         {p}
                     </span>
                     })}
@@ -51,8 +53,10 @@ export const Users = (props: usersType) => {
                             <div key={u.id} className={s.userItem}>
                                 <div className={s.imgBlock}>
                                     <NavLink to={"/profile/" + u.id}>
-                                        <img alt={"213"}
-                                             src={u.photos.large !== null ? u.photos.large : anna}/>
+                                        <img
+                                            alt={"213"}
+                                            src={u.photos.large !== null ? u.photos.large : anna}
+                                        />
                                     </NavLink>
                                 </div>
                                 <div>
@@ -60,10 +64,10 @@ export const Users = (props: usersType) => {
                                     {u.followed
                                         ? <button
                                             onClick={() => {
-
-                                                axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
-                                                    .then(response => {
-                                                        if (response.data.resultCode === 0) {
+                                                // axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
+                                                usersAPI.unFollowUser(u.id)
+                                                    .then(res => {
+                                                        if (res.resultCode === 0) {
                                                             props.onClickUnfollowHandler(u.followed, u.id)
                                                         }
                                                     })
@@ -71,9 +75,10 @@ export const Users = (props: usersType) => {
 
                                         : <button
                                             onClick={() => {
-                                                axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
-                                                    .then(response => {
-                                                        if (response.data.resultCode === 0) {
+                                                // axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
+                                                usersAPI.followUser(u.id)
+                                                    .then(res => {
+                                                        if (res.resultCode === 0) {
                                                             props.onClickFollowHandler(u.followed, u.id)
                                                         }
                                                     })

@@ -8,9 +8,9 @@ import {
     setUsers,
     unfollowFriends,
 } from "../../redux/user-page-reducer";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../Preloader/Preloader";
+import {usersAPI} from "../../api/users-api";
 
 type photosType = {
     small:string | null
@@ -34,11 +34,6 @@ export type usersPageType = {
     isLoading:boolean
 }
 
-const settings = {
-    withCredentials:true,
-    "API-KEY": "b5fcdfe7-6baa-4918-9c3b-3910bf1accdc"
-}
-
 export class UsersClass extends React.Component<usersPropsType, usersPageType> {
 
     constructor(props: usersPropsType) {
@@ -47,13 +42,13 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
 
     componentDidMount() {
         this.props.setIsLoading(true)
-        axios
-            .get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`, settings)
-            .then(response => {
+            // axios.get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`, settings)
+            usersAPI.getUsers(this.props.currentPage, this.props.usersOnPage)
+            .then(res => {
                 this.props.setIsLoading(false)
-                console.log(response)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+                console.log(res)
+                this.props.setUsers(res.items)
+                this.props.setTotalUsersCount(res.totalCount)
             })
     }
 
@@ -69,11 +64,12 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
     onClickChangePageHandler = (currentPage: number) => {
         this.props.setIsLoading(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`, settings)
-            .then(response => {
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`, settings)
+            usersAPI.getUsers(currentPage, this.props.usersOnPage)
+            .then(res => {
                 this.props.setIsLoading(false)
-                console.log(response)
-                this.props.setUsers(response.data.items)
+                console.log(res)
+                this.props.setUsers(res.items)
             })
     }
 
