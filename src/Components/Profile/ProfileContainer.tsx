@@ -10,7 +10,6 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 export class ProfileClass extends React.Component<newProfilePropsType, profilePageType> {
 
     componentDidMount() {
-        debugger
         const userId = +this.props.match.params.userId
         console.log(userId)
         this.props.getProfileTC(userId)
@@ -25,7 +24,6 @@ export class ProfileClass extends React.Component<newProfilePropsType, profilePa
 
     render() {
         console.log(this.props)
-        debugger
         return(
             <Profile profileInfo ={this.props.profileInfo}/>
             )

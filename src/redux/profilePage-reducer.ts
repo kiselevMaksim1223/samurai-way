@@ -100,7 +100,6 @@ export const setProfileInfo
 
 
 export const getProfileTC = (userId:number):AppThunkType => (dispatch) => {
-    debugger
     profileAPI.getProfile(userId)
         .then(res => {
             console.log(res)

@@ -10,7 +10,7 @@ export type profileType = {
 }
 
 const Profile = (props:profileType) => {
-    debugger
+
     return <div className={s.content}>
         <ProfileInfo profileInfo={props.profileInfo}/>
         <MyPostsContainerSuper/>

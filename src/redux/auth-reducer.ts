@@ -15,7 +15,7 @@ export type setUserDataAT = {
 
 export type authActionsType = setUserDataAT
 
-type authDataType = {
+export type authDataType = {
     id:number | null
     login:string | null
     email:string | null
@@ -40,7 +40,6 @@ const initialState:authStateType = {
 export const authReducer = (state = initialState, action:authActionsType) => {
     switch (action.type){
         case SET_USER_DATA:
-            debugger
             return {...state, ...action, isAuth:true}
         // case SET_RESULT_CODE:
         //     return {...state, resultCode:action.resultCode}
@@ -59,7 +58,7 @@ export const authMeTC = (): AppThunkType => (dispatch) => {
         .then(res => {
             if (res.resultCode === 0) {
                 const {id, login, email} = res.data
-                dispatch(setUserData(id, login, email))
+                dispatch(setUserData(id as number, login as string, email as string))
             }
         })
 }
