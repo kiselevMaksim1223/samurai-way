@@ -23,8 +23,28 @@ export const usersAPI = {
     },
     unFollowUser(userId:number){
         return(
-            instance.delete(`https://social-network.samuraijs.com/api/1.0//follow/${userId}`)
+            instance.delete(`follow/${userId}`)
             .then((res) => res.data)
         )
     },
+}
+
+export const profileAPI = {
+    getProfile(userId:number) {
+        debugger
+        return(
+            instance.get(`profile/${!userId ? 2: userId}`)
+            .then((res) => res.data)
+        )
+    },
+
+}
+
+export const headerAPI = {
+    authMe(){
+        return (
+            instance.get("auth/me")
+                .then(res => res.data)
+        )
+    }
 }

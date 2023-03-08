@@ -3,7 +3,6 @@ import s from "./Users.module.css"
 import anna from "../Friends/avas/Anna.jpg";
 import {userItemType} from "./UsersContainer";
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/users-api";
 
 
 type usersType = {
@@ -12,10 +11,12 @@ type usersType = {
     usersOnPage: number
     currentPage: number
     onClickChangePageHandler: (currentPage: number) => void
-    onClickFollowHandler: (isFollow: boolean, userId: number) => void
-    onClickUnfollowHandler: (isFollow: boolean, userId: number) => void
+    // onClickFollowHandler: (isFollow: boolean, userId: number) => void
+    // onClickUnfollowHandler: (isFollow: boolean, userId: number) => void
     followingInProgress: Array<number>
-    setIsFollowing: (isFollowing:boolean, userId:number) => void
+    setIsFollowing: (isFollowing: boolean, userId: number) => void
+    unFollowFriendTC: (isFollowing: boolean, userId: number) => void
+    followFriendTC: (isFollowing: boolean, userId: number) => void
 }
 
 export const Users = (props: usersType) => {
@@ -62,29 +63,32 @@ export const Users = (props: usersType) => {
                                             // дизейблим кнопку методом проверки есть ли в массиве id пользователя которого мы анфоловим
                                             disabled={props.followingInProgress.some(id => id === u.id)}
                                             onClick={() => {
-                                                props.setIsFollowing(true, u.id)
-                                                // axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
-                                                usersAPI.unFollowUser(u.id)
-                                                    .then(res => {
-                                                        if (res.resultCode === 0) {
-                                                            props.onClickUnfollowHandler(u.followed, u.id)
-                                                        }
-                                                        props.setIsFollowing(false, u.id)
-                                                    })
+                                                props.unFollowFriendTC(u.followed, u.id)
+
+                                                // props.setIsFollowing(true, u.id)
+                                                // // axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, settings)
+                                                // usersAPI.unFollowUser(u.id)
+                                                //     .then(res => {
+                                                //         if (res.resultCode === 0) {
+                                                //             props.onClickUnfollowHandler(u.followed, u.id)
+                                                //         }
+                                                //         props.setIsFollowing(false, u.id)
+                                                //     })
                                             }}>UnFollow</button>
 
                                         : <button
                                             disabled={props.followingInProgress.some(id => id === u.id)}
                                             onClick={() => {
-                                                props.setIsFollowing(true, u.id)
-                                                // axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
-                                                usersAPI.followUser(u.id)
-                                                    .then(res => {
-                                                        if (res.resultCode === 0) {
-                                                            props.onClickFollowHandler(u.followed, u.id)
-                                                        }
-                                                        props.setIsFollowing(false, u.id)
-                                                    })
+                                                props.followFriendTC(u.followed, u.id)
+                                                // props.setIsFollowing(true, u.id)
+                                                // // axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {}, settings)
+                                                // usersAPI.followUser(u.id)
+                                                //     .then(res => {
+                                                //         if (res.resultCode === 0) {
+                                                //             props.onClickFollowHandler(u.followed, u.id)
+                                                //         }
+                                                //         props.setIsFollowing(false, u.id)
+                                                //     })
                                             }}>Follow</button>}
                                 </div>
                             </div>

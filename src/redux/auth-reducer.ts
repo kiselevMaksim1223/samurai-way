@@ -1,15 +1,7 @@
+import {AppThunkType} from "./redux-store";
+import {headerAPI} from "../api/users-api";
 
-
-export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
-export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"
-export const SET_USERS = "SET-USERS"
-export const SET_PAGE = "SET-PAGE"
-export const SET_TOTAL_USER_COUNT = "SET-TOTAL-USER-COUNT"
-export const SET_IS_LOADING = "SET-IS-LOADING"
 export const SET_USER_DATA = "SET-USER-DATA"
-// export const SET_RESULT_CODE = "SET-RESULT-CODE"
-
-
 
 export type setUserDataAT = {
     type: typeof SET_USER_DATA
@@ -21,7 +13,7 @@ export type setUserDataAT = {
 //     resultCode: 0 | 1
 // }
 
-export type actionsType = setUserDataAT
+export type authActionsType = setUserDataAT
 
 type authDataType = {
     id:number | null
@@ -45,7 +37,7 @@ const initialState:authStateType = {
 
 }
 
-export const authReducer = (state = initialState, action:actionsType) => {
+export const authReducer = (state = initialState, action:authActionsType) => {
     switch (action.type){
         case SET_USER_DATA:
             debugger
@@ -60,3 +52,14 @@ export const authReducer = (state = initialState, action:actionsType) => {
 //переименуем AC в названия без AC для сокращения кода в mapDispatchToProps
 export const setUserData:((id:number, login:string, email:string)=> setUserDataAT) = (id, login, email) => ({type:SET_USER_DATA, data:{id, login, email}})
 // export const setResultCode:((resultCode:0 | 1)=> setResultCodeAT) = (resultCode) => ({type:SET_RESULT_CODE, resultCode})
+
+
+export const authMeTC = (): AppThunkType => (dispatch) => {
+    headerAPI.authMe()
+        .then(res => {
+            if (res.resultCode === 0) {
+                const {id, login, email} = res.data
+                dispatch(setUserData(id, login, email))
+            }
+        })
+}

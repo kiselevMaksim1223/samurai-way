@@ -1,31 +1,27 @@
 import React from "react";
 import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
 import {
-    AppStateType,
-} from "../../redux/redux-store";
-import {
-    followFriends, setCurrentPage, setIsFollowing, setIsLoading, setTotalUsersCount,
-    setUsers,
-    unfollowFriends, usersPageType,
+    followFriendTC, getUsersTC, setCurrentPage, setIsFollowing, setIsLoading, setTotalUsersCount,
+    setUsers,  unFollowFriendTC, usersPageType,
 } from "../../redux/user-page-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../Preloader/Preloader";
-import {usersAPI} from "../../api/users-api";
+
 
 type photosType = {
-    small:string | null
-    large:string | null
+    small: string | null
+    large: string | null
 }
 
 export type userItemType = {
     name: string
     id: number
-    uniqueUrlName:string | null
+    uniqueUrlName: string | null
     photos: photosType
-    status:string | null
-    followed:boolean
+    status: string | null
+    followed: boolean
 }
-
 
 
 export class UsersClass extends React.Component<usersPropsType, usersPageType> {
@@ -35,36 +31,38 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
     }
 
     componentDidMount() {
-        this.props.setIsLoading(true)
-            // axios.get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`, settings)
-            usersAPI.getUsers(this.props.currentPage, this.props.usersOnPage)
-            .then(res => {
-                this.props.setIsLoading(false)
-                console.log(res)
-                this.props.setUsers(res.items)
-                this.props.setTotalUsersCount(res.totalCount)
-            })
+        // this.props.setIsLoading(true)
+        //     // axios.get<usersPageType>(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersOnPage}`, settings)
+        //     usersAPI.getUsers(this.props.currentPage, this.props.usersOnPage)
+        //     .then(res => {
+        //         this.props.setIsLoading(false)
+        //         console.log(res)
+        //         this.props.setUsers(res.items)
+        //         this.props.setTotalUsersCount(res.totalCount)
+        //     })
+        this.props.getUsersTC(this.props.currentPage, this.props.usersOnPage)
     }
 
-    onClickUnfollowHandler = (isFollowed: boolean, userId: number) => {
-        return this.props.unfollowFriends(isFollowed, userId)
+    // onClickUnfollowHandler = (isFollowed: boolean, userId: number) => {
+    //     this.props.unfollowFriends(isFollowed, userId)
+    //
+    // }
 
-    }
-
-    onClickFollowHandler = (isFollowed: boolean, userId: number) => {
-        return this.props.followFriends(isFollowed, userId)
-    }
+    // onClickFollowHandler = (isFollowed: boolean, userId: number) => {
+    //     this.props.followFriends(isFollowed, userId)
+    // }
 
     onClickChangePageHandler = (currentPage: number) => {
-        this.props.setIsLoading(true)
-        this.props.setCurrentPage(currentPage)
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`, settings)
-            usersAPI.getUsers(currentPage, this.props.usersOnPage)
-            .then(res => {
-                this.props.setIsLoading(false)
-                console.log(res)
-                this.props.setUsers(res.items)
-            })
+        this.props.getUsersTC(currentPage, this.props.usersOnPage)
+        // this.props.setIsLoading(true)
+        // this.props.setCurrentPage(currentPage)
+        // // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.usersOnPage}`, settings)
+        //     usersAPI.getUsers(currentPage, this.props.usersOnPage)
+        //     .then(res => {
+        //         this.props.setIsLoading(false)
+        //         console.log(res)
+        //         this.props.setUsers(res.items)
+        //     })
     }
 
     render() {
@@ -119,11 +117,12 @@ export class UsersClass extends React.Component<usersPropsType, usersPageType> {
                     totalCount={this.props.totalCount}
                     currentPage={this.props.currentPage}
                     onClickChangePageHandler={this.onClickChangePageHandler}
-                    onClickFollowHandler={this.onClickFollowHandler}
-                    onClickUnfollowHandler={this.onClickUnfollowHandler}
-                    followingInProgress = {this.props.isFollowing}
-                    setIsFollowing = {this.props.setIsFollowing}
-
+                    // onClickFollowHandler={this.onClickFollowHandler}
+                    // onClickUnfollowHandler={this.onClickUnfollowHandler}
+                    followingInProgress={this.props.isFollowing}
+                    setIsFollowing={this.props.setIsFollowing}
+                    unFollowFriendTC = {this.props.unFollowFriendTC}
+                    followFriendTC = {this.props.followFriendTC}
                 />}
         </>
     }
@@ -135,16 +134,19 @@ type MapStateToProps = {
     totalCount: number
     currentPage: number
     isLoading: boolean
-    isFollowing:Array<number>
+    isFollowing: Array<number>
 }
 type MapDispatchToProps = {
     followFriends: (isFollow: boolean, userId: number) => void
-    unfollowFriends:(isFollow: boolean, userId: number) => void
-    setUsers:(userList: userItemType[]) => void
-    setCurrentPage:(currentPage: number) => void
-    setTotalUsersCount:(setTotalUsersCount: number) => void
-    setIsLoading: (isLoading:boolean) => void
-    setIsFollowing: (isFollowing:boolean, userId:number) => void
+    unfollowFriends: (isFollow: boolean, userId: number) => void
+    setUsers: (userList: userItemType[]) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (setTotalUsersCount: number) => void
+    setIsLoading: (isLoading: boolean) => void
+    setIsFollowing: (isFollowing: boolean, userId: number) => void
+    getUsersTC: (currentPage: number, usersOnPage: number) => void
+    unFollowFriendTC: (isFollowing: boolean, userId: number) => void
+    followFriendTC: (isFollowing: boolean, userId: number) => void
 }
 
 export type usersPropsType = MapStateToProps & MapDispatchToProps
@@ -195,6 +197,10 @@ export const UsersContainer = connect(
     // " ...если вы передаете в connect вторым аргументом не mapDispatchToProps,
     // а объект с AC, то connect оборачивает ваши AC в функцию-обертку () => store.dispatch(AC) и передаёт в props компонента."
     // типизация остается прежней!!!
-    {followFriends, unfollowFriends, setUsers, setCurrentPage, setTotalUsersCount, setIsLoading, setIsFollowing}
+    {
+         setUsers,setCurrentPage, setTotalUsersCount,
+        setIsLoading, setIsFollowing, getUsersTC, unFollowFriendTC,
+        followFriendTC
+    }
 )
 (UsersClass)

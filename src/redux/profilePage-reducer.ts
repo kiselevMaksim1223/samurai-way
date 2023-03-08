@@ -1,6 +1,5 @@
-
-
-
+import {AppThunkType} from "./redux-store";
+import {profileAPI} from "../api/users-api";
 
 
 export type postDataType = {
@@ -54,7 +53,7 @@ export type setProfileInfoAT = {
 }
 
 
-type actionsType = addNewPostAT | changeNewPostAT | setProfileInfoAT
+export type profilePageActionsType = addNewPostAT | changeNewPostAT | setProfileInfoAT
 
 let initialState: profilePageType = {
     postData: [
@@ -68,7 +67,7 @@ let initialState: profilePageType = {
     profileInfo: null
 }
 
-export const profilePageReducer = (state: profilePageType = initialState, action: actionsType): profilePageType => {
+export const profilePageReducer = (state: profilePageType = initialState, action: profilePageActionsType): profilePageType => {
     switch (action.type) {
         case "ADD-NEW-POST":
             const newPost = {
@@ -99,3 +98,12 @@ export const setProfileInfo
     :((profileInfo:profileInfoType) => setProfileInfoAT)
     = (profileInfo) => ({type:"SET-PROFILE-INFO", profileInfo})
 
+
+export const getProfileTC = (userId:number):AppThunkType => (dispatch) => {
+    debugger
+    profileAPI.getProfile(userId)
+        .then(res => {
+            console.log(res)
+            dispatch(setProfileInfo(res))
+        })
+}

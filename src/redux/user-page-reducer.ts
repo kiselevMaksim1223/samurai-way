@@ -1,4 +1,6 @@
 import {userItemType} from "../Components/users/UsersContainer";
+import {usersAPI} from "../api/users-api";
+import {AppThunkType} from "./redux-store";
 
 export const FOLLOW_FRIENDS = "FOLLOW-FRIENDS"
 export const UNFOLLOW_FRIENDS = "UNFOLLOW-FRIENDS"
@@ -43,7 +45,7 @@ export type setIsLoadingAT = {
 
 export type setIsFollowingAT = ReturnType<typeof setIsFollowing>
 
-export type actionsType = followFriendsAT | unfollowFriendsAT | setUsersAT | setCurrentPageAT | setTotalUsersCountAT | setIsLoadingAT | setIsFollowingAT
+export type userPageActionsType = followFriendsAT | unfollowFriendsAT | setUsersAT | setCurrentPageAT | setTotalUsersCountAT | setIsLoadingAT | setIsFollowingAT
 
 export type usersPageType = {
     items: userItemType[]
@@ -63,7 +65,7 @@ const initialState:usersPageType = {
     followingInProgress:[] //сделали массив чтобы при нажатии дизейблить кнопки follow\unfollow пользователя которого мы хотим фоловить или анфоловить
 }
 
-export const userPageReducer = (state:usersPageType = initialState, action:actionsType):usersPageType => {
+export const userPageReducer = (state:usersPageType = initialState, action:userPageActionsType):usersPageType => {
     switch (action.type){
         case FOLLOW_FRIENDS:
             return {
@@ -98,3 +100,39 @@ export const setCurrentPage:((currentPage:number) => setCurrentPageAT) = (curren
 export const setTotalUsersCount:((totalUsersCount:number) => setTotalUsersCountAT) = (totalUsersCount) => ({type: SET_TOTAL_USER_COUNT, totalCount:totalUsersCount})
 export const setIsLoading:((isLoading:boolean)=> setIsLoadingAT) = (isLoading) => ({type:SET_IS_LOADING, isLoading})
 export const setIsFollowing  = (isFollowing:boolean, userId:number) => ({type:SET_IS_FOLLOWING, isFollowing, userId} as const)
+
+
+
+export const getUsersTC = (currentPage:number, usersOnPage:number): AppThunkType => (dispatch) => {
+    dispatch(setIsLoading(true))
+    dispatch(setCurrentPage(currentPage))
+    usersAPI.getUsers(currentPage, usersOnPage)
+        .then(res => {
+            dispatch(setIsLoading(false))
+            console.log(res)
+            dispatch(setUsers(res.items))
+            dispatch(setTotalUsersCount(res.totalCount))
+        })
+}
+
+export const unFollowFriendTC = (isFollowing:boolean, userId:number): AppThunkType => (dispatch) => {
+    dispatch(setIsFollowing(true, userId))
+    usersAPI.unFollowUser(userId)
+        .then(res => {
+            if (res.resultCode === 0) { // если нет ошибок то ...(в бэке реализовано так что статус код всегда 200 но есть resultCode который сообщает о наличии ошибки)
+                dispatch(unfollowFriends(isFollowing, userId))
+            }
+            dispatch(setIsFollowing(false, userId))
+        })
+}
+
+export const followFriendTC = (isFollowing:boolean, userId:number): AppThunkType => (dispatch) => {
+    dispatch(setIsFollowing(true, userId))
+    usersAPI.followUser(userId)
+        .then(res => {
+            if (res.resultCode === 0) {
+                dispatch(followFriends(isFollowing, userId))
+            }
+            dispatch(setIsFollowing(false, userId))
+        })
+}

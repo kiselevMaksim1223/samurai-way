@@ -5,6 +5,7 @@ import {profileType} from "../Profile";
 
 
 export const ProfileInfo = (props:profileType) => {
+    debugger
     return (
         <div>
             <div>
